@@ -10,11 +10,11 @@ public class ArrayBlockingQueue<T> {
 
     private Object[] elements;
 
-    private volatile int head = 0;
+    private int head = 0;
 
-    private volatile int tail = 0;
+    private int tail = 0;
 
-    private volatile int count = 0;
+    private int count = 0;
 
     private final Lock lock;
 
@@ -32,11 +32,13 @@ public class ArrayBlockingQueue<T> {
     }
 
     public boolean add(T t) throws Exception {
+        final Object[] elements = this.elements;
         final Lock lock = this.lock;
         lock.lock();
         try {
-            if(!enqueue(t))
+            if(count == elements.length)
                 throw new Exception();
+            enqueue(t);
             return true;
         }
         finally {
@@ -45,20 +47,23 @@ public class ArrayBlockingQueue<T> {
     }
 
     public boolean remove() throws Exception {
+        final Object[] elements = this.elements;
         final Lock lock = this.lock;
         lock.lock();
         try {
-            if(dequeue() == null)
+            if(count <= 0)
                 throw new Exception();
+            dequeue();
+            return true;
         }
         finally {
             lock.unlock();
         }
-        return true;
     }
 
     public T element() throws Exception {
         Object object = null;
+        final Object[] elements = this.elements;
         final Lock lock = this.lock;
         lock.lock();
         try {
@@ -73,16 +78,18 @@ public class ArrayBlockingQueue<T> {
     }
 
     public boolean offer(T t) {
-        boolean status;
+        final Object[] elements = this.elements;
         final Lock lock = this.lock;
         lock.lock();
         try {
-            status = enqueue(t);
+            if(count == elements.length)
+                return false;
+            else
+                return enqueue(t);
         }
         finally {
             lock.unlock();
         }
-        return status;
     }
 
     public T poll() {
@@ -90,6 +97,8 @@ public class ArrayBlockingQueue<T> {
         final Lock lock = this.lock;
         lock.lock();
         try {
+            if(count <= 0)
+                return null;
             object = dequeue();
         }
         finally {
@@ -117,8 +126,9 @@ public class ArrayBlockingQueue<T> {
         final Lock lock = this.lock;
         lock.lockInterruptibly();
         try {
-            while(!enqueue(t))
+            while(count == elements.length)
                 full.await();
+            enqueue(t);
         }
         finally {
             lock.unlock();
@@ -130,8 +140,9 @@ public class ArrayBlockingQueue<T> {
         final Lock lock = this.lock;
         lock.lockInterruptibly();
         try {
-            while((object = dequeue()) == null)
+            while(count <= 0)
                 empty.await();
+            object = dequeue();
         }
         finally {
             lock.unlock();
@@ -184,7 +195,7 @@ public class ArrayBlockingQueue<T> {
     private boolean enqueue(T t) {
         final Object[] elements = this.elements;
         elements[tail++] = t;
-        if(tail > elements.length)
+        if(tail == elements.length)
             tail = 0;
         count++;
         empty.signalAll();
@@ -193,10 +204,10 @@ public class ArrayBlockingQueue<T> {
 
     private T dequeue() {
         final Object[] elements = this.elements;
-        if(head == elements.length)
-            head = 0;
         Object object = elements[head];
         elements[head++] = null;
+        if(head == elements.length)
+            head = 0;
         count--;
         full.signalAll();
         return (T)object;

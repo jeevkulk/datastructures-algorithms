@@ -132,14 +132,31 @@ public class TestArrayBlockingQueue {
 
     @Test
     public void testPut() throws Exception {
+        try {
+            Assert.assertTrue(arrayBlockingQueue.offer("A", 10000, TimeUnit.MICROSECONDS));
+            Assert.assertTrue(arrayBlockingQueue.offer("B", 10000, TimeUnit.MICROSECONDS));
+            Assert.assertTrue(arrayBlockingQueue.offer("C", 10000, TimeUnit.MICROSECONDS));
+            Assert.assertTrue(arrayBlockingQueue.offer("D", 10000, TimeUnit.MICROSECONDS));
+            Assert.assertTrue(arrayBlockingQueue.offer("E", 10000, TimeUnit.MICROSECONDS));
+            Assert.assertTrue(arrayBlockingQueue.offer("F", 10000, TimeUnit.MICROSECONDS));
+
+            Assert.assertTrue("A".equals(arrayBlockingQueue.poll(10000, TimeUnit.MICROSECONDS)));
+            Assert.assertTrue("B".equals(arrayBlockingQueue.poll(10000, TimeUnit.MICROSECONDS)));
+
+            Assert.assertTrue(arrayBlockingQueue.offer("G", 100000, TimeUnit.MICROSECONDS));
+            Assert.assertTrue(arrayBlockingQueue.offer("H", 100000, TimeUnit.MICROSECONDS));
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
+        Assert.assertTrue(arrayBlockingQueue.size() == 6);
+    }
+
+    @Test
+    public void testPutMultiThreaded() throws Exception {
 
         try {
 
-
             ExecutorService service = Executors.newFixedThreadPool(2);
-
-            //java.util.concurrent.ArrayBlockingQueue<String> arrayBlockingQueue = new java.util.concurrent.ArrayBlockingQueue<String>(6);
-
 
             Runnable task1 = () -> {
                 try {
@@ -150,9 +167,6 @@ public class TestArrayBlockingQueue {
                     Assert.assertTrue(arrayBlockingQueue.offer("E", 10000, TimeUnit.MICROSECONDS));
                     Assert.assertTrue(arrayBlockingQueue.offer("F", 10000, TimeUnit.MICROSECONDS));
 
-                    Assert.assertTrue("A".equals(arrayBlockingQueue.poll(10000, TimeUnit.MICROSECONDS)));
-                    Assert.assertTrue("B".equals(arrayBlockingQueue.poll(10000, TimeUnit.MICROSECONDS)));
-
                     Assert.assertTrue(arrayBlockingQueue.offer("G", 100000, TimeUnit.MICROSECONDS));
                     Assert.assertTrue(arrayBlockingQueue.offer("H", 100000, TimeUnit.MICROSECONDS));
                 } catch (InterruptedException ie) {
@@ -160,24 +174,23 @@ public class TestArrayBlockingQueue {
                 }
             };
 
+            Runnable task2 = () -> {
+                try {
+                    Assert.assertTrue("A".equals(arrayBlockingQueue.poll(10000, TimeUnit.MICROSECONDS)));
+                    Assert.assertTrue("B".equals(arrayBlockingQueue.poll(10000, TimeUnit.MICROSECONDS)));
+                } catch (InterruptedException ie) {
+                    ie.printStackTrace();
+                }
+            };
+
+
             service.submit(task1);
-
-       /* Runnable task2 = () -> {
-            try {
-                Assert.assertTrue("A".equals(arrayBlockingQueue.poll(10000, TimeUnit.MICROSECONDS)));
-                Assert.assertTrue("B".equals(arrayBlockingQueue.poll(10000, TimeUnit.MICROSECONDS)));
-            } catch (InterruptedException ie) {
-                ie.printStackTrace();
-            }
-        };
-
-
-        service.submit(task2);*/
+            service.submit(task2);
 
             service.awaitTermination(100000, TimeUnit.MICROSECONDS);
             service.shutdown();
 
-            //Assert.assertTrue(arrayBlockingQueue.size() == 6);
+            Assert.assertTrue(arrayBlockingQueue.size() == 6);
         }
         catch (Exception ex) {
             ex.printStackTrace();
