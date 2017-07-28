@@ -1,26 +1,21 @@
 package datastructure.graph;
 
-
-import java.util.ArrayDeque;
-import java.util.Deque;
-
 public class Trie {
 
     private Node root;
-    private Deque<Node> queue = new ArrayDeque<>();
 
     public Trie() {
         root = new Node();
     }
 
-    public void addWord(char[] ch, int startPos, Node node) {
-        if(startPos < ch.length)
-            addChar(ch, startPos, root);
+    public void addWord(String word) {
+        char[] ch = word.toCharArray();
+        addChar(ch, 0, root);
     }
 
     private void addChar(char[] ch, int pos, Node node) {
         Node newNode;
-        int hash = ch[pos] - 'a';
+        int hash = getHash(ch[pos]);
         if((node.getBit() & 1 << hash) == 0) {
             node.setBit(getBit(node.getBit(), hash));
             newNode = new Node();
@@ -40,9 +35,11 @@ public class Trie {
         return newBit;
     }
 
-    public void dfs(Node node) {
-        if(node == null)
-            node = root;
+    public void printTrie() {
+        dfs(root);
+    }
+
+    private void dfs(Node node) {
         int bit = node.getBit();
         int[] bitPos = getBitPosition(bit);
         Node[] nodes = node.getNodes();
@@ -65,6 +62,15 @@ public class Trie {
         for(int i = 0; i < bitPosCtr; i++)
             newBitPos[i] = bitPos[i];
         return newBitPos;
+    }
+
+    /**
+     * Assuming ASCII characters
+     * @param ch
+     * @return
+     */
+    private int getHash(char ch) {
+        return (int)(ch - 'a');
     }
 
     private char getChar(int pos) {

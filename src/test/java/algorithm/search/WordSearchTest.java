@@ -1,4 +1,4 @@
-package datastructure.graph;
+package algorithm.search;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,22 +7,18 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TrieTest {
+public class WordSearchTest {
 
-    private Trie trie;
+    private WordSearch wordSearch;
 
     @Before
     public void setup() {
-        trie = new Trie();
+        wordSearch = new WordSearch();
     }
 
     @Test
-    public void TestTrie() {
-        trie.addWord("jeevan");
-        trie.addWord("jasween");
-        trie.addWord("ranjeet");
-        trie.printTrie();
+    public void testExecute() {
+        wordSearch.execute();
         Mockito.times(1);
     }
-
 }
