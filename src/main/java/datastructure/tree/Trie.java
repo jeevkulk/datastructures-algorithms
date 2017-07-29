@@ -1,16 +1,34 @@
-package datastructure.graph;
+package datastructure.tree;
+
+import algorithm.search.WordSearch;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Trie {
 
+    private Logger log = LogManager.getLogger(Trie.class);
+
     private Node root;
+
+    private int count = 0;
+
+    private final String END_OF_WORD_CHAR = "|";
 
     public Trie() {
         root = new Node();
     }
 
+    /**
+     * Method to add word to trie
+     * @param word
+     */
     public void addWord(String word) {
-        char[] ch = word.toCharArray();
-        addChar(ch, 0, root);
+        if(word != null) {
+            word = word.concat(END_OF_WORD_CHAR);
+            word = word.toLowerCase();
+            char[] ch = word.toCharArray();
+            addChar(ch, 0, root);
+        }
     }
 
     private void addChar(char[] ch, int pos, Node node) {
@@ -18,6 +36,9 @@ public class Trie {
         int hash = getHash(ch[pos]);
         if((node.getBit() & 1 << hash) == 0) {
             node.setBit(getBit(node.getBit(), hash));
+            if(ch[pos] == END_OF_WORD_CHAR.toCharArray()[0]) {
+                count++;
+            }
             newNode = new Node();
             Node[] nodes = node.getNodes();
             nodes[hash] = newNode;
@@ -35,6 +56,10 @@ public class Trie {
         return newBit;
     }
 
+    public int getSize() {
+        return count;
+    }
+
     public void printTrie() {
         dfs(root);
     }
@@ -44,7 +69,7 @@ public class Trie {
         int[] bitPos = getBitPosition(bit);
         Node[] nodes = node.getNodes();
         for(int pos : bitPos) {
-            System.out.print(getChar(pos));
+            log.info(getChar(pos));
             dfs(nodes[pos]);
         }
     }
@@ -62,6 +87,35 @@ public class Trie {
         for(int i = 0; i < bitPosCtr; i++)
             newBitPos[i] = bitPos[i];
         return newBitPos;
+    }
+
+    public boolean isWordPresent(String word) {
+        boolean isPresent = false;
+        if(word != null) {
+            word = word.concat(END_OF_WORD_CHAR);
+            word = word.toLowerCase();
+            char[] ch = word.toCharArray();
+            isPresent = checkChar(ch, 0, root);
+        }
+        return isPresent;
+    }
+
+    private boolean checkChar(char[] ch, int pos, Node node) {
+        boolean isPresent = false;
+        int bit = node.getBit();
+        int hash = getHash(ch[pos]);
+        if((bit & 1 << hash) != 0) {
+            if(++pos < ch.length) {
+                Node[] nodes = node.getNodes();
+                Node newNode = nodes[hash];
+                isPresent = checkChar(ch, pos, newNode);
+            }
+            else
+                isPresent = true;
+        }
+        else
+            isPresent = false;
+        return isPresent;
     }
 
     /**
