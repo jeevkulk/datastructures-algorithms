@@ -1,6 +1,5 @@
 package datastructure.tree;
 
-import algorithm.search.WordSearch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

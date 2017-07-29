@@ -13,9 +13,9 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class WordSearch {
+public class ShakespeareWordSearch {
 
-    private Logger log = LogManager.getLogger(WordSearch.class);
+    private Logger log = LogManager.getLogger(ShakespeareWordSearch.class);
 
     public void execute() {
         long startTime = System.currentTimeMillis();

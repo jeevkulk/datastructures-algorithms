@@ -7,18 +7,18 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class WordSearchTest {
+public class ShakespeareWordSearchTest {
 
-    private WordSearch wordSearch;
+    private ShakespeareWordSearch shakespeareWordSearch;
 
     @Before
     public void setup() {
-        wordSearch = new WordSearch();
+        shakespeareWordSearch = new ShakespeareWordSearch();
     }
 
     @Test
     public void testExecute() {
-        wordSearch.execute();
+        shakespeareWordSearch.execute();
         Mockito.times(1);
     }
 }
