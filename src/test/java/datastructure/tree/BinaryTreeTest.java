@@ -38,4 +38,17 @@ public class BinaryTreeTest {
         Assert.assertFalse(binaryTree.contains(0));
         Assert.assertFalse(binaryTree.contains(10));
     }
+
+    @Test
+    public void testIsBinarySearchTree() {
+        binaryTree.insert(4);
+        //binaryTree.insert(2);
+        binaryTree.insert(6);
+        //binaryTree.insert(1);
+        //binaryTree.insert(3);
+        binaryTree.insert(5);
+        binaryTree.insert(7);
+
+        Assert.assertTrue(binaryTree.isBinarySearchTree());
+    }
 }

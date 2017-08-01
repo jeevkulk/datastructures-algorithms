@@ -99,10 +99,10 @@ public class BinaryTree {
 
     private void printPreOrder(Node node) {
         System.out.print(node.data + " ");
-        if(node.left != null) {
+        if (node.left != null) {
             printPreOrder(node.left);
         }
-        if(node.right != null) {
+        if (node.right != null) {
             printPreOrder(node.right);
         }
     }
@@ -113,19 +113,40 @@ public class BinaryTree {
     public void printPostOrder() {
         System.out.println("");
         System.out.println("PostOrder: ");
-        if(root != null) {
+        if (root != null) {
             printPostOrder(root);
         }
     }
 
     private void printPostOrder(Node node) {
-        if(node.left != null) {
+        if (node.left != null) {
             printPostOrder(node.left);
         }
-        if(node.right != null) {
+        if (node.right != null) {
             printPostOrder(node.right);
         }
         System.out.print(node.data + " ");
+    }
+
+    public boolean isBinarySearchTree() {
+        return checkBST(root);
+    }
+
+    private boolean checkBST(Node node) {
+        if (node.left != null && !checkBST(node.left))
+            return false;
+        if (node.right != null && !checkBST(node.right))
+            return false;
+        if (node.left != null && node.right != null && node.left.data < node.data && node.right.data > node.data)
+            return true;
+        else if (node.left != null && node.right == null && node.left.data < node.data)
+            return true;
+        else if (node.left == null && node.right != null && node.right.data > node.data)
+            return true;
+        else if (node.left == null && node.right == null)
+            return true;
+        else
+            return false;
     }
 
     private class Node {
