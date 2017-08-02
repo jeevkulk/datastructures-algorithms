@@ -129,11 +129,11 @@ public class BinaryTree {
     }
 
     public boolean isBinarySearchTree() {
-        //return checkBST(root);
-        return checkBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        //return isBinarySearchTree(root);
+        return isBinarySearchTree(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
-    /*private boolean checkBST(Node node) {
+    /*private boolean isBinarySearchTree(Node node) {
         if (node.left != null && !checkBST(node.left))
             return false;
 
@@ -149,13 +149,35 @@ public class BinaryTree {
             return false;
     }*/
 
-    private boolean checkBST(Node node, int min, int max) {
+    private boolean isBinarySearchTree(Node node, int min, int max) {
         if (node == null)
             return true;
-        else if (min < node.data && node.data < max && checkBST(node.left, min, node.data) && checkBST(node.right, node.data, max))
+        else if (min < node.data && node.data < max && isBinarySearchTree(node.left, min, node.data) && isBinarySearchTree(node.right, node.data, max))
             return true;
         else
             return false;
+    }
+
+    public int getHeight() {
+        if(root == null)
+            return 0;
+        return getHeight(root);
+    }
+
+    private int getHeight(Node node) {
+        boolean counted = false;
+        int height = 0;
+        if(node.left != null) {
+            counted = true;
+            height++;
+            height = getHeight(node.left) + height;
+        }
+        if(node.right != null) {
+            if (!counted)
+                height++;
+            height = getHeight(node.right) + height;
+        }
+        return height;
     }
 
     private class Node {
