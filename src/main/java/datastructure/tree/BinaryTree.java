@@ -129,21 +129,30 @@ public class BinaryTree {
     }
 
     public boolean isBinarySearchTree() {
-        return checkBST(root);
+        //return checkBST(root);
+        return checkBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
-    private boolean checkBST(Node node) {
+    /*private boolean checkBST(Node node) {
         if (node.left != null && !checkBST(node.left))
             return false;
+
         if (node.right != null && !checkBST(node.right))
             return false;
-        if (node.left != null && node.right != null && node.left.data < node.data && node.right.data > node.data)
+
+        if (node.left == null || (node.left != null && node.left.data < node.data)) {
+            if (node.right == null || (node.right != null && node.right.data > node.data))
+                return true;
+            else
+                return false;
+        } else
+            return false;
+    }*/
+
+    private boolean checkBST(Node node, int min, int max) {
+        if (node == null)
             return true;
-        else if (node.left != null && node.right == null && node.left.data < node.data)
-            return true;
-        else if (node.left == null && node.right != null && node.right.data > node.data)
-            return true;
-        else if (node.left == null && node.right == null)
+        else if (min < node.data && node.data < max && checkBST(node.left, min, node.data) && checkBST(node.right, node.data, max))
             return true;
         else
             return false;
