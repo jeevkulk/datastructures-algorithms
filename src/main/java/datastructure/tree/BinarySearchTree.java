@@ -1,7 +1,7 @@
 package datastructure.tree;
 
 
-public class BinaryTree {
+public class BinarySearchTree {
 
     private Node root;
 
@@ -129,25 +129,8 @@ public class BinaryTree {
     }
 
     public boolean isBinarySearchTree() {
-        //return isBinarySearchTree(root);
         return isBinarySearchTree(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
-
-    /*private boolean isBinarySearchTree(Node node) {
-        if (node.left != null && !checkBST(node.left))
-            return false;
-
-        if (node.right != null && !checkBST(node.right))
-            return false;
-
-        if (node.left == null || (node.left != null && node.left.data < node.data)) {
-            if (node.right == null || (node.right != null && node.right.data > node.data))
-                return true;
-            else
-                return false;
-        } else
-            return false;
-    }*/
 
     private boolean isBinarySearchTree(Node node, int min, int max) {
         if (node == null)
@@ -165,6 +148,13 @@ public class BinaryTree {
     }
 
     private int getHeight(Node node) {
+        if(node == null)
+            return 0;
+        else
+            return 1 + Math.max(getHeight(node.left), getHeight(node.right));
+    }
+
+    /*private int getHeight(Node node) {
         boolean counted = false;
         int height = 0;
         if(node.left != null) {
@@ -178,6 +168,29 @@ public class BinaryTree {
             height = getHeight(node.right) + height;
         }
         return height;
+    }*/
+
+    public int getMaxWidth() {
+        if(root == null)
+            return 1;
+        int maxWidth = 0;
+        int tempWidth = 0;
+        int height = getHeight(root);
+        for(int i = 0; i < height; i++) {
+            tempWidth = getWidth(root, i);
+            if(tempWidth > maxWidth)
+                maxWidth = tempWidth;
+        }
+        return maxWidth;
+    }
+
+    private int getWidth(Node node, int depth) {
+        if(node == null)
+            return 0;
+        else if(depth == 0)
+            return 1;
+        else
+            return getWidth(node.left,depth - 1) + getWidth(node.right, depth - 1);
     }
 
     private class Node {
