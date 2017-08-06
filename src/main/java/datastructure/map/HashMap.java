@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class HashMap<K, V> implements IMap<K, V>{
 
-    private Entry<K, V>[] entryArr;
+    private Node<K, V>[] nodeArr;
 
     private int count;
 
@@ -42,54 +42,54 @@ public class HashMap<K, V> implements IMap<K, V>{
 
     @Override
     public boolean put(K k, V v) {
-        Entry<K, V>[] entryArr = this.entryArr;
-        if(entryArr == null)
-            entryArr = initialize();
+        Node<K, V>[] nodeArr = this.nodeArr;
+        if(nodeArr == null)
+            nodeArr = initialize();
         if(count > initialCapacity * loadFactor) {
-            entryArr = rehash();
+            nodeArr = rehash();
         }
-        entryArr = putEntry(entryArr, k, v);
+        nodeArr = putEntry(nodeArr, k, v);
         count++;
         return true;
     }
 
-    private Entry<K, V>[] putEntry(Entry<K, V>[] entryArr, K k, V v) {
+    private Node<K, V>[] putEntry(Node<K, V>[] nodeArr, K k, V v) {
         int hash = k.hashCode();
-        Entry<K, V> newEntry = new Entry(k, v, hash);
+        Node<K, V> newNode = new Node(k, v, hash);
         int bin = getBin(hash);
-        if(entryArr[bin] == null) {
-            entryArr[bin] = newEntry;
+        if(nodeArr[bin] == null) {
+            nodeArr[bin] = newNode;
         } else {
-            Entry<K, V> existingEntry = entryArr[bin];
-            while(existingEntry.getNext() != null)
-                existingEntry = existingEntry.getNext();
-            existingEntry.setNext(newEntry);
+            Node<K, V> existingNode = nodeArr[bin];
+            while(existingNode.getNext() != null)
+                existingNode = existingNode.getNext();
+            existingNode.setNext(newNode);
         }
-        return entryArr;
+        return nodeArr;
     }
 
-    private Entry<K, V>[] initialize() {
-        Entry<K, V>[] entryArr = new Entry[initialCapacity];
-        this.entryArr = entryArr;
-        return entryArr;
+    private Node<K, V>[] initialize() {
+        Node<K, V>[] nodeArr = new Node[initialCapacity];
+        this.nodeArr = nodeArr;
+        return nodeArr;
     }
 
-    private Entry<K, V>[] rehash() {
-        Entry<K, V>[] entryArr = this.entryArr;
+    private Node<K, V>[] rehash() {
+        Node<K, V>[] nodeArr = this.nodeArr;
         this.initialCapacity = initialCapacity << 1;
-        Entry<K, V>[] newEntryArr = new Entry[this.initialCapacity];
-        for(int i=0; i<entryArr.length; i++) {
-            Entry<K,V> entry = entryArr[i];
-            if (entry != null) {
-                while(entry.getNext() != null) {
-                    newEntryArr = putEntry(newEntryArr, entry.getKey(), entry.getValue());
-                    entry = entry.getNext();
+        Node<K, V>[] newNodeArr = new Node[this.initialCapacity];
+        for(int i = 0; i< nodeArr.length; i++) {
+            Node<K,V> node = nodeArr[i];
+            if (node != null) {
+                while(node.getNext() != null) {
+                    newNodeArr = putEntry(newNodeArr, node.getKey(), node.getValue());
+                    node = node.getNext();
                 }
-                newEntryArr = putEntry(newEntryArr, entry.getKey(), entry.getValue());
+                newNodeArr = putEntry(newNodeArr, node.getKey(), node.getValue());
             }
         }
-        this.entryArr = newEntryArr;
-        return newEntryArr;
+        this.nodeArr = newNodeArr;
+        return newNodeArr;
     }
 
     private int getBin(int hash) {
@@ -98,53 +98,57 @@ public class HashMap<K, V> implements IMap<K, V>{
 
     @Override
     public V get(K k) {
-        Entry<K, V>[] entryArr = this.entryArr;
+        Node<K, V>[] nodeArr = this.nodeArr;
         int hash = k.hashCode();
         int index = getBin(hash);
-        Entry<K, V> entry = entryArr[index];
-        if(entry != null) {
-            if (entry.getNext() != null) {
-                while (entry.getNext() != null) {
-                    if (k.equals(entry.getKey()))
-                        return entry.getValue();
-                    entry = entry.getNext();
+        Node<K, V> node = nodeArr[index];
+        if(node != null) {
+            if (node.getNext() != null) {
+                while (node.getNext() != null) {
+                    if (k.equals(node.getKey()))
+                        return node.getValue();
+                    node = node.getNext();
                 }
             }
-            return entry.getValue();
+            return node.getValue();
         }
         return null;
     }
 
     @Override
     public boolean remove(K k) {
-        Entry<K, V>[] entryArr = this.entryArr;
+        Node<K, V>[] nodeArr = this.nodeArr;
         int hash = k.hashCode();
-        entryArr[getBin(hash)] = null;
+        nodeArr[getBin(hash)] = null;
         count--;
         return true;
     }
 
     @Override
     public Set<K> getKeySet() {
-        Entry<K, V>[] entryArr = this.entryArr;
+        Node<K, V>[] nodeArr = this.nodeArr;
         Set<K> keySet = new HashSet<>();
-        for(int i = 0; i < entryArr.length; i++) {
-            keySet.add(entryArr[i].getKey());
+        for(int i = 0; i < nodeArr.length; i++) {
+            keySet.add(nodeArr[i].getKey());
         }
         return null;
     }
 
-    private class Entry<K, V> implements IMap.IEntry<K, V> {
+    static class Node<K, V> implements IMap.IEntry<K, V> {
         private K key;
         private V value;
         private int hash;
-        private Entry<K, V> next;
+        private Node<K, V> next;
 
-        public Entry(K key, V value, int hash) {
+        public Node(K key, V value, int hash) {
+            this(key, value, hash, null);
+        }
+
+        public Node(K key, V value, int hash, Node<K, V> node) {
             this.key = key;
             this.value = value;
             this.hash = hash;
-            this.next = null;
+            this.next = node;
         }
 
         public K getKey() {
@@ -171,11 +175,11 @@ public class HashMap<K, V> implements IMap<K, V>{
             this.hash = hash;
         }
 
-        public Entry<K, V> getNext() {
+        public Node<K, V> getNext() {
             return next;
         }
 
-        public void setNext(Entry<K, V> next) {
+        public void setNext(Node<K, V> next) {
             this.next = next;
         }
     }
