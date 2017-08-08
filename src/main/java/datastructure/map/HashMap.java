@@ -48,24 +48,11 @@ public class HashMap<K, V> implements IMap<K, V>{
         if(count > initialCapacity * loadFactor) {
             nodeArr = rehash();
         }
-        nodeArr = putEntry(nodeArr, k, v);
+        Node<K, V> newNode = createNode(k, v);
+        nodeArr = putEntry(nodeArr, newNode);
         count++;
+        afterNodeInsertion(newNode,count >= maximumCapacity);
         return true;
-    }
-
-    private Node<K, V>[] putEntry(Node<K, V>[] nodeArr, K k, V v) {
-        int hash = k.hashCode();
-        Node<K, V> newNode = new Node(k, v, hash);
-        int bin = getBin(hash);
-        if(nodeArr[bin] == null) {
-            nodeArr[bin] = newNode;
-        } else {
-            Node<K, V> existingNode = nodeArr[bin];
-            while(existingNode.getNext() != null)
-                existingNode = existingNode.getNext();
-            existingNode.setNext(newNode);
-        }
-        return nodeArr;
     }
 
     private Node<K, V>[] initialize() {
@@ -82,14 +69,35 @@ public class HashMap<K, V> implements IMap<K, V>{
             Node<K,V> node = nodeArr[i];
             if (node != null) {
                 while(node.getNext() != null) {
-                    newNodeArr = putEntry(newNodeArr, node.getKey(), node.getValue());
+                    newNodeArr = putEntry(newNodeArr, replacementNode(node));
                     node = node.getNext();
                 }
-                newNodeArr = putEntry(newNodeArr, node.getKey(), node.getValue());
+                newNodeArr = putEntry(newNodeArr, replacementNode(node));
             }
         }
         this.nodeArr = newNodeArr;
         return newNodeArr;
+    }
+
+    private Node<K, V>[] putEntry(Node<K, V>[] nodeArr, Node<K, V> newNode) {
+        int bin = getBin(newNode.getHash());
+        if(nodeArr[bin] == null) {
+            nodeArr[bin] = newNode;
+        } else {
+            Node<K, V> existingNode = nodeArr[bin];
+            while(existingNode.getNext() != null)
+                existingNode = existingNode.getNext();
+            existingNode.setNext(newNode);
+        }
+        return nodeArr;
+    }
+
+    Node<K, V> createNode(K key, V value) {
+        return new Node<K, V>(key, value, key.hashCode());
+    }
+
+    Node<K, V> replacementNode(Node<K, V> node) {
+        return new Node<K, V>(node.getKey(), node.getValue(), node.getHash());
     }
 
     private int getBin(int hash) {
@@ -98,19 +106,27 @@ public class HashMap<K, V> implements IMap<K, V>{
 
     @Override
     public V get(K k) {
+        Node<K, V> node = getNode(k);
+        return (node == null) ? null : node.getValue();
+    }
+
+    final Node<K, V> getNode(K k) {
         Node<K, V>[] nodeArr = this.nodeArr;
         int hash = k.hashCode();
         int index = getBin(hash);
         Node<K, V> node = nodeArr[index];
-        if(node != null) {
+        if (node != null) {
             if (node.getNext() != null) {
                 while (node.getNext() != null) {
-                    if (k.equals(node.getKey()))
-                        return node.getValue();
+                    if (k.equals(node.getKey())) {
+                        afterNodeAccess(node);
+                        return node;
+                    }
                     node = node.getNext();
                 }
             }
-            return node.getValue();
+            afterNodeAccess(node);
+            return node;
         }
         return null;
     }
@@ -119,8 +135,10 @@ public class HashMap<K, V> implements IMap<K, V>{
     public boolean remove(K k) {
         Node<K, V>[] nodeArr = this.nodeArr;
         int hash = k.hashCode();
+        Node<K, V> node = nodeArr[getBin(hash)];
         nodeArr[getBin(hash)] = null;
         count--;
+        afterNodeRemoval(node);
         return true;
     }
 
@@ -131,14 +149,28 @@ public class HashMap<K, V> implements IMap<K, V>{
         for(int i = 0; i < nodeArr.length; i++) {
             keySet.add(nodeArr[i].getKey());
         }
-        return null;
+        return keySet;
     }
+
+    /**
+     * Callback methods for LinkedHashMap
+     * @param node
+     * @param evict
+     */
+    void afterNodeInsertion(HashMap.Node<K,V> node, boolean evict) { }
+    void afterNodeAccess(HashMap.Node<K,V> node) { }
+    void afterNodeRemoval(HashMap.Node<K,V> node) { }
+
 
     static class Node<K, V> implements IMap.IEntry<K, V> {
         private K key;
         private V value;
         private int hash;
         private Node<K, V> next;
+
+        public Node(K key, V value) {
+            this(key, value, key.hashCode(), null);
+        }
 
         public Node(K key, V value, int hash) {
             this(key, value, hash, null);
