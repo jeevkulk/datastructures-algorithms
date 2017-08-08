@@ -59,6 +59,24 @@ public class LinkedHashMapTest {
         Assert.assertTrue(linkedHashMap.get(keyStr) == null);
     }
 
+    @Test
+    public void testAccessFrequencyOrder() {
+        LinkedHashMap<String, String> linkedHashMap = new LinkedHashMap<>(4, 5, 0.75f, LinkedHashMap.Order.ACCESS_FREQUENCY_ORDER);
+        linkedHashMap = populateLinkedHashMap(linkedHashMap);
+        Assert.assertTrue(testEntries(linkedHashMap));
+
+        String keyStr = "India";
+        String valueStr = "New Delhi";
+        linkedHashMap.get(keyStr);
+
+        keyStr = "Japan";
+        valueStr = "Tokyo";
+        linkedHashMap.put(keyStr, valueStr);
+
+        keyStr = "Pakistan";
+        Assert.assertTrue(linkedHashMap.get(keyStr) == null);
+    }
+
     private LinkedHashMap<String, String> populateLinkedHashMap(LinkedHashMap<String, String> linkedHashMap) {
         String keyStr = "India";
         String valueStr = "New Delhi";

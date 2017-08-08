@@ -51,7 +51,7 @@ public class HashMap<K, V> implements IMap<K, V>{
         Node<K, V> newNode = createNode(k, v);
         nodeArr = putEntry(nodeArr, newNode);
         count++;
-        afterNodeInsertion(newNode,count >= maximumCapacity);
+        afterNodeInsertion(newNode,count > maximumCapacity);
         return true;
     }
 
@@ -69,8 +69,9 @@ public class HashMap<K, V> implements IMap<K, V>{
             Node<K,V> node = nodeArr[i];
             if (node != null) {
                 while(node.getNext() != null) {
+                    Node<K,V> nextNode = node.getNext();
                     newNodeArr = putEntry(newNodeArr, replacementNode(node));
-                    node = node.getNext();
+                    node = nextNode;
                 }
                 newNodeArr = putEntry(newNodeArr, replacementNode(node));
             }
