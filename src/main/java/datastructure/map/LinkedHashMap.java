@@ -29,6 +29,11 @@ public class LinkedHashMap<K, V> extends HashMap<K, V> implements IMap<K, V> {
         this.order = Order.INSERTION_ORDER;
     }
 
+    public LinkedHashMap(int initialCapacity, int maximumCapacity, Order order) {
+        super(initialCapacity, maximumCapacity);
+        this.order = order;
+    }
+
     public LinkedHashMap(int initialCapacity, int maximumCapacity, float loadFactor, Order order) {
         super(initialCapacity, maximumCapacity, loadFactor);
         this.order = order;
@@ -180,7 +185,7 @@ public class LinkedHashMap<K, V> extends HashMap<K, V> implements IMap<K, V> {
         }
     }
 
-    enum Order {
+    public enum Order {
         ACCESS_ORDER,
         ACCESS_FREQUENCY_ORDER,
         INSERTION_ORDER
