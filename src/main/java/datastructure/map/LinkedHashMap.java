@@ -29,8 +29,8 @@ public class LinkedHashMap<K, V> extends HashMap<K, V> implements IMap<K, V> {
         this.order = Order.INSERTION_ORDER;
     }
 
-    public LinkedHashMap(int intialCapacity, int maximumCapacity, float loadFactor, Order order) {
-        super(intialCapacity, maximumCapacity, loadFactor);
+    public LinkedHashMap(int initialCapacity, int maximumCapacity, float loadFactor, Order order) {
+        super(initialCapacity, maximumCapacity, loadFactor);
         this.order = order;
     }
 
@@ -71,22 +71,9 @@ public class LinkedHashMap<K, V> extends HashMap<K, V> implements IMap<K, V> {
             tail = newNode;
         } else {
             if (Order.ACCESS_FREQUENCY_ORDER == this.order) {
-                //Searching for right position for newly inserted node to be added
-                LinkedHashMap.Node<K, V> nodePosition = tail;
-                while (nodePosition != null && nodePosition.getAccessCount() <= newNode.getAccessCount()) {
-                    nodePosition = nodePosition.getBefore();
-                }
-                //Insert accessed node here
-                LinkedHashMap.Node<K, V> tempNode = nodePosition;
-                nodePosition.setAfter(newNode);
-                newNode.setBefore(nodePosition);
-                newNode.setAfter(tempNode);
-                tempNode.setBefore(newNode);
+                insertNodeAsPerOrder(tail, newNode);
             } else {
-                LinkedHashMap.Node<K, V> second = head;
-                head = newNode;
-                head.setAfter(second);
-                second.setBefore(head);
+                setAsHead(newNode);
             }
         }
         if(evict) {
@@ -94,43 +81,44 @@ public class LinkedHashMap<K, V> extends HashMap<K, V> implements IMap<K, V> {
         }
     }
 
+    private void insertNodeAsPerOrder(LinkedHashMap.Node<K, V> startNodePosition, LinkedHashMap.Node<K, V> node) {
+        LinkedHashMap.Node<K, V> nodePosition = startNodePosition;
+        if (Order.ACCESS_FREQUENCY_ORDER == this.order) {
+            while (nodePosition != null && nodePosition.getAccessCount() <= node.getAccessCount()) {
+                nodePosition = nodePosition.getBefore();
+            }
+        }
+        if (nodePosition != null) {
+            LinkedHashMap.Node<K, V> tempNode = nodePosition;
+            nodePosition.setAfter(node);
+            node.setBefore(nodePosition);
+            node.setAfter(tempNode);
+            tempNode.setBefore(node);
+        } else {
+            setAsHead(node);
+        }
+    }
+
+    private void setAsHead(LinkedHashMap.Node<K, V> node) {
+        LinkedHashMap.Node<K, V> secondNode = head;
+        head = node;
+        head.setBefore(null);
+        head.setAfter(secondNode);
+        secondNode.setBefore(head);
+    }
+
     @Override
     void afterNodeAccess(HashMap.Node<K, V> node) {
         LinkedHashMap.Node<K, V> accessedNode = (LinkedHashMap.Node<K, V>) node;
         if (Order.ACCESS_ORDER == this.order) {
-            //Removing accessed node from the list
             removeNodeReference(accessedNode);
-
-            //Setting accessed node as head
-            LinkedHashMap.Node<K, V> secondNode = head;
-            head = accessedNode;
-            head.setBefore(null);
-            head.setAfter(secondNode);
-            secondNode.setBefore(head);
+            setAsHead(accessedNode);
         } else if (Order.ACCESS_FREQUENCY_ORDER == this.order) {
-            //Searching for right position for accessed node to be inserted
-            LinkedHashMap.Node<K, V> nodePosition = accessedNode.getBefore();
             accessedNode.setAccessCount(accessedNode.getAccessCount() + 1);
-            while (nodePosition != null && nodePosition.getAccessCount() <= accessedNode.getAccessCount()) {
-                nodePosition = nodePosition.getBefore();
-            }
-            //Removing accessed node from the list
+            LinkedHashMap.Node<K, V> beforeNode = accessedNode.getBefore();
             removeNodeReference(accessedNode);
-
-            //Insert accessed node here
-            LinkedHashMap.Node<K, V> tempNode = nodePosition;
-            nodePosition.setAfter(accessedNode);
-            accessedNode.setBefore(nodePosition);
-            accessedNode.setAfter(tempNode);
-            tempNode.setBefore(accessedNode);
+            insertNodeAsPerOrder(beforeNode, accessedNode);
         }
-    }
-
-    @Override
-    void afterNodeRemoval(HashMap.Node<K, V> node) {
-        LinkedHashMap.Node<K, V> deletedNode = (LinkedHashMap.Node<K, V>)node;
-        removeNodeReference(deletedNode);
-        deletedNode = null;
     }
 
     private void removeNodeReference(LinkedHashMap.Node<K, V> node) {
@@ -146,6 +134,13 @@ public class LinkedHashMap<K, V> extends HashMap<K, V> implements IMap<K, V> {
         } else {
             tail = beforeNode;
         }
+    }
+
+    @Override
+    void afterNodeRemoval(HashMap.Node<K, V> node) {
+        LinkedHashMap.Node<K, V> deletedNode = (LinkedHashMap.Node<K, V>)node;
+        removeNodeReference(deletedNode);
+        deletedNode = null;
     }
 
     static class Node<K, V> extends HashMap.Node<K, V> {
