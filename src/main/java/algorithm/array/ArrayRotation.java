@@ -44,16 +44,22 @@ public class ArrayRotation {
     }
 
     public int[] rotateArray(int[] arrInt, int rotateBy) {
-        int i = 0, j = 0;
-        int[] temp = new int[rotateBy];
-        for(i=0; i<rotateBy; i++) {
-            temp[i] = arrInt[i];
-        }
-        for(i=0; i<arrInt.length; i++) {
-            if(i+rotateBy < arrInt.length)
-                arrInt[i] = arrInt[i+rotateBy];
-            else
-                arrInt[i] = temp[j++];
+        int i = 0, j = 0, k = 0;
+        int index = 0;
+        int[] tempArr = new int[rotateBy];
+        for (i=0; i<arrInt.length; i++) {
+            if (j < tempArr.length) {
+                index = (i + rotateBy < arrInt.length) ? i + rotateBy : i + rotateBy - arrInt.length;
+                tempArr[j++] = arrInt[index];
+                arrInt[index] = arrInt[i];
+            } else if (j == tempArr.length) {
+                index = (i + rotateBy < arrInt.length) ? i + rotateBy : i + rotateBy - arrInt.length;
+                int temp = arrInt[index];
+                arrInt[index] = tempArr[k];
+                tempArr[k++] = temp;
+                if (k == tempArr.length)
+                    k = 0;
+            }
         }
         return arrInt;
     }
