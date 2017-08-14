@@ -8,6 +8,9 @@ Refer: src/main/java/algorithm/array/ArrayRotation
 **1.2 Rotate Matrix:** Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes, write a method to rotate the image by 90 degrees. Can you do this in place?
 Refer: src/main/java/algorithm/array/MatrixRotation
 
+**1.3 Max Sum of Sub-Array:** Given an array of integers - find the maximum sum of its sub-array.
+Refer: src/main/java/algorithm/array/MaxSumOfSubArray
+
 **2. Search Algorithms**
  
 **2.1. Shakespeare Word Usage Analysis** Given two files (refer to resoruces directory), one containing words used by Shakespeare and the other containing all the words in Webster dictionary - find the following:
