@@ -13,6 +13,8 @@ public class Sort<T extends Comparable<T>> implements ISort<T> {
                 arr = new InsertionSort<T>().insertionSort(arr);
             case MERGE_SORT:
                 arr = new MergeSort<T>().mergeSort(arr);
+            case QUICK_SORT:
+                arr = new QuickSort<T>().quickSort(arr);
         }
         return arr;
     }
@@ -21,6 +23,7 @@ public class Sort<T extends Comparable<T>> implements ISort<T> {
         BUBBLE_SORT,
         SELECTION_SORT,
         INSERTION_SORT,
-        MERGE_SORT
+        MERGE_SORT,
+        QUICK_SORT
     }
 }
