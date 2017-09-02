@@ -75,22 +75,21 @@ public class AdjacencyLinkedListGraph<T> extends Graph<T> {
     public String toString() {
         StringBuilder cumulativeStringBuilder = new StringBuilder();
         for (int i = 0; i < verticesArr.length; i++) {
-            StringBuilder vertextStringBuilder = new StringBuilder();
+            StringBuilder vertexStringBuilder = new StringBuilder();
             Vertex vertex = (Vertex)verticesArr[i];
             if (vertex != null) {
-                vertextStringBuilder.append(vertex.getId() + "->");
+                vertexStringBuilder.append(vertex.getId() + "->");
                 Edge[] edgeArr = vertex.getEdgeArr();
                 if (edgeArr != null) {
                     for (int j = 0; j < edgeArr.length; j++) {
                         if (edgeArr[j] != null) {
-                            vertextStringBuilder.append(edgeArr[j].getVertexTo().getId()+" ");
+                            vertexStringBuilder.append(edgeArr[j].getVertexTo().getId()+" ");
                         }
                     }
                 }
             }
-            System.out.println(vertextStringBuilder.toString());
-            cumulativeStringBuilder.append(vertextStringBuilder);
-            vertextStringBuilder = new StringBuilder();
+            System.out.println(vertexStringBuilder.toString());
+            cumulativeStringBuilder.append(vertexStringBuilder);
         }
         return cumulativeStringBuilder.toString();
     }
