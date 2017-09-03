@@ -1,20 +1,16 @@
 package datastructure.graph;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public abstract class Graph<T> implements IGraph<T> {
 
-    protected static AtomicInteger vertexIdCounter = new AtomicInteger();
-    protected static AtomicInteger edgeIdCounter = new AtomicInteger();
-    protected int numberOfNodes;
+    protected int numberOfVertices;
     protected boolean directed;
 
-    static class Vertex<T> {
+    protected class Vertex<T> {
         private int id;
         private T t;
 
         public Vertex(T t) {
-            this.id = vertexIdCounter.incrementAndGet();;
+            this.id = getVertexId();
             this.t = t;
         }
 
@@ -33,16 +29,24 @@ public abstract class Graph<T> implements IGraph<T> {
         public void setT(T t) {
             this.t = t;
         }
+
+        @Override
+        public String toString() {
+            return "Vertex{" +
+                    "id=" + id +
+                    ", t=" + t +
+                    '}';
+        }
     }
 
-    static class Edge {
+    protected class Edge {
         private int id;
         private Graph.Vertex vertexFrom;
         private Graph.Vertex vertexTo;
         private int weight;
 
         public Edge(Graph.Vertex vertexFrom, Graph.Vertex vertexTo, int weight) {
-            this.id = edgeIdCounter.incrementAndGet();
+            this.id = getEdgeId();
             this.vertexFrom = vertexFrom;
             this.vertexTo = vertexTo;
             this.weight = weight;
@@ -79,5 +83,19 @@ public abstract class Graph<T> implements IGraph<T> {
         public void setVertexTo(Graph.Vertex vertexTo) {
             this.vertexTo = vertexTo;
         }
+
+        @Override
+        public String toString() {
+            return "Edge{" +
+                    "id=" + id +
+                    ", vertexFrom=" + vertexFrom +
+                    ", vertexTo=" + vertexTo +
+                    ", weight=" + weight +
+                    '}';
+        }
     }
+
+    protected abstract int getVertexId();
+
+    protected abstract int getEdgeId();
 }
