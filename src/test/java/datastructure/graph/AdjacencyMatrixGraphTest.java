@@ -18,10 +18,10 @@ public class AdjacencyMatrixGraphTest {
     @Test
     public void testUndirectedAdjacencyMatrixGraph() {
         adjacencyMatrixGraph = new AdjacencyMatrixGraph<>(4, false);
-        Graph.Vertex vertex1 = adjacencyMatrixGraph.createVertex("One");
-        Graph.Vertex vertex2 = adjacencyMatrixGraph.createVertex("Two");
-        Graph.Vertex vertex3 = adjacencyMatrixGraph.createVertex("Three");
-        Graph.Vertex vertex4 = adjacencyMatrixGraph.createVertex("Four");
+        Graph.Vertex vertex1 = adjacencyMatrixGraph.createVertex("0");
+        Graph.Vertex vertex2 = adjacencyMatrixGraph.createVertex("1");
+        Graph.Vertex vertex3 = adjacencyMatrixGraph.createVertex("2");
+        Graph.Vertex vertex4 = adjacencyMatrixGraph.createVertex("3");
 
         adjacencyMatrixGraph.addEdge(vertex1, vertex2, 1);
         adjacencyMatrixGraph.addEdge(vertex1, vertex3, 1);
@@ -35,10 +35,10 @@ public class AdjacencyMatrixGraphTest {
     @Test
     public void testDirectedAdjacencyMatrixGraph() {
         adjacencyMatrixGraph = new AdjacencyMatrixGraph<>(4, true);
-        Graph.Vertex vertex1 = adjacencyMatrixGraph.createVertex("One");
-        Graph.Vertex vertex2 = adjacencyMatrixGraph.createVertex("Two");
-        Graph.Vertex vertex3 = adjacencyMatrixGraph.createVertex("Three");
-        Graph.Vertex vertex4 = adjacencyMatrixGraph.createVertex("Four");
+        Graph.Vertex vertex1 = adjacencyMatrixGraph.createVertex("0");
+        Graph.Vertex vertex2 = adjacencyMatrixGraph.createVertex("1");
+        Graph.Vertex vertex3 = adjacencyMatrixGraph.createVertex("2");
+        Graph.Vertex vertex4 = adjacencyMatrixGraph.createVertex("3");
 
         adjacencyMatrixGraph.addEdge(vertex1, vertex2, 1);
         adjacencyMatrixGraph.addEdge(vertex1, vertex3, 1);
@@ -52,10 +52,10 @@ public class AdjacencyMatrixGraphTest {
     @Test
     public void testGetLinkedEdges() {
         adjacencyMatrixGraph = new AdjacencyMatrixGraph<>(4, true);
-        Graph.Vertex vertex1 = adjacencyMatrixGraph.createVertex("One");
-        Graph.Vertex vertex2 = adjacencyMatrixGraph.createVertex("Two");
-        Graph.Vertex vertex3 = adjacencyMatrixGraph.createVertex("Three");
-        Graph.Vertex vertex4 = adjacencyMatrixGraph.createVertex("Four");
+        Graph.Vertex vertex1 = adjacencyMatrixGraph.createVertex("Zero");
+        Graph.Vertex vertex2 = adjacencyMatrixGraph.createVertex("One");
+        Graph.Vertex vertex3 = adjacencyMatrixGraph.createVertex("Two");
+        Graph.Vertex vertex4 = adjacencyMatrixGraph.createVertex("Three");
 
         adjacencyMatrixGraph.addEdge(vertex1, vertex2, 1);
         adjacencyMatrixGraph.addEdge(vertex1, vertex3, 1);
@@ -68,16 +68,16 @@ public class AdjacencyMatrixGraphTest {
             if (edgeArr[i] != null)
                 logger.info(edgeArr[i].toString());
         }
-        Assert.assertEquals("Edge{id=3, vertexFrom=Vertex{id=2, t=Three}, vertexTo=Vertex{id=3, t=Four}, weight=1}", adjacencyMatrixGraph.getLinkedEdges(vertex3)[3].toString());
+        Assert.assertEquals("Edge{id=3, vertexFrom=Vertex{id=2, t=Two}, vertexTo=Vertex{id=3, t=Three}, weight=1}", adjacencyMatrixGraph.getLinkedEdges(vertex3)[3].toString());
     }
 
     @Test
     public void testGetLinkedVertices() {
         adjacencyMatrixGraph = new AdjacencyMatrixGraph<>(4, true);
-        Graph.Vertex vertex1 = adjacencyMatrixGraph.createVertex("One");
-        Graph.Vertex vertex2 = adjacencyMatrixGraph.createVertex("Two");
-        Graph.Vertex vertex3 = adjacencyMatrixGraph.createVertex("Three");
-        Graph.Vertex vertex4 = adjacencyMatrixGraph.createVertex("Four");
+        Graph.Vertex vertex1 = adjacencyMatrixGraph.createVertex("Zero");
+        Graph.Vertex vertex2 = adjacencyMatrixGraph.createVertex("One");
+        Graph.Vertex vertex3 = adjacencyMatrixGraph.createVertex("Two");
+        Graph.Vertex vertex4 = adjacencyMatrixGraph.createVertex("Three");
 
         adjacencyMatrixGraph.addEdge(vertex1, vertex2, 1);
         adjacencyMatrixGraph.addEdge(vertex1, vertex3, 1);
@@ -90,6 +90,6 @@ public class AdjacencyMatrixGraphTest {
             if (vertexArr[i] != null)
                 logger.info(vertexArr[i].toString());
         }
-        Assert.assertEquals("Vertex{id=3, t=Four}", adjacencyMatrixGraph.getLinkedVertices(vertex3)[3].toString());
+        Assert.assertEquals("Vertex{id=3, t=Three}", adjacencyMatrixGraph.getLinkedVertices(vertex3)[3].toString());
     }
 }

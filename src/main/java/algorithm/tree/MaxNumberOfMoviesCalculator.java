@@ -2,12 +2,19 @@ package algorithm.tree;
 
 public class MaxNumberOfMoviesCalculator {
 
+    /**
+     * Creates a matrix representing a tree. '1' indicates that a movie starting at jth co-ordinate
+     * and ending at ith co-ordinate can be viewed after the current.
+     * @param startTime
+     * @param endTime
+     * @return
+     */
 	public int findMaxNumberOfMovies(int[] startTime, int[] endTime) {
 		int[][] tree = new int[startTime.length][endTime.length];
 
 		for (int j = 0; j < endTime.length; j++) {
 			for (int i = 0; i < startTime.length; i++) {
-				if(endTime[j] <= startTime[i] && i!=j)
+				if (endTime[j] <= startTime[i] && i != j)
 					tree[j][i] = 1;
 				else
 					tree[j][i] = 0;
@@ -18,7 +25,7 @@ public class MaxNumberOfMoviesCalculator {
 	
 	private int findMaxDepth(int[][] tree) {
 		int i, j, count = 0, maxCount = 0;
-		for (i=0; i<tree.length; i++) {
+		for (i = 0; i < tree.length; i++) {
 			for (j = 0; j < tree[i].length; j++) {
 				if (tree[i][j] == 1) {
 					count = dfs(tree, i, j);
@@ -58,9 +65,14 @@ public class MaxNumberOfMoviesCalculator {
 		}
 		return -1;
 	}
-	
+
+    /**
+     * To store the movies that can be watched after current.
+     * No used in current scenario - but can be used to report
+     * movies that can be watched just in case.
+     */
 	private class Stack {
-		String[] strArr = null;
+		private String[] strArr = null;
 		private int top = -1;
 
 		public Stack(int size) {
@@ -70,6 +82,7 @@ public class MaxNumberOfMoviesCalculator {
 		public void push(String str) {
             strArr[++top] = str;
 		}
+
 		public String pop() {
 			return strArr[top--];
 		}

@@ -87,7 +87,7 @@ public class AdjacencyLinkedListGraph<T> extends Graph<T> {
     }
 
     @Override
-    public Vertex<T> getMotherVertex() {
+    public Vertex<T>[] getMotherVertices() {
         return null;
     }
 

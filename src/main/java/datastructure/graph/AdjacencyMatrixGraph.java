@@ -9,12 +9,17 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
 
     private Logger logger = LogManager.getLogger(AdjacencyMatrixGraph.class);
     /**
-     * Internal storage structure for ADJACENCY_MATRIX
+     * Internal storage structure for ADJACENCY_MATRIX_GRAPH
      */
     protected AtomicInteger vertexIdCounter = new AtomicInteger(0);
     protected AtomicInteger edgeIdCounter = new AtomicInteger(0);
-    private Graph.Edge[][] edgeArr;
+    private Graph<T>.Edge[][] edgeArr;
 
+    /**
+     * Constructor
+     * @param numberOfVertices
+     * @param directed
+     */
     public AdjacencyMatrixGraph(int numberOfVertices, boolean directed) {
         super();
         this.numberOfVertices = numberOfVertices;
@@ -32,12 +37,24 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
         return edgeIdCounter.getAndIncrement();
     }
 
+
+    /**
+     * Creates a vertex
+     * @param t
+     * @return
+     */
     @Override
     public Vertex<T> createVertex(T t) {
         Graph.Vertex vertex = new Graph.Vertex(t);
         return vertex;
     }
 
+    /**
+     * Creates edges
+     * @param vertexFrom
+     * @param vertexTo
+     * @param weight
+     */
     @Override
     public void addEdge(Vertex<T> vertexFrom, Vertex<T> vertexTo, int weight) {
         Edge edge = new Edge(vertexFrom, vertexTo, weight);
@@ -50,10 +67,15 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
     }
 
     @Override
-    public Vertex<T> getMotherVertex() {
+    public Vertex<T>[] getMotherVertices() {
         return null;
     }
 
+    /**
+     * Gets linked edges
+     * @param vertex
+     * @return
+     */
     @Override
     public Edge[] getLinkedEdges(final Vertex<T> vertex) {
         int vertexId = vertex.getId();
@@ -65,8 +87,13 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
         return linkedEdgeArr;
     }
 
+    /**
+     * Gets Linked vertices
+     * @param vertex
+     * @return
+     */
     @Override
-    public Vertex[] getLinkedVertices(final Vertex vertex) {
+    public Vertex[] getLinkedVertices(final Vertex<T> vertex) {
         int vertexId = vertex.getId();
         Graph.Edge[] linkedEdgeArr = new Graph.Edge[this.numberOfVertices];
         Vertex[] linkedVerticesArr = new Vertex[this.numberOfVertices];
@@ -78,6 +105,22 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
         return linkedVerticesArr;
     }
 
+
+    public void doDepthFirstTraversal() {
+        Graph<T>.Edge[][] localEdgeArr = edgeArr;
+
+        boolean[][] visited = new boolean[localEdgeArr.length][localEdgeArr.length];
+        /*for (int i = 0; i < localEdgeArr.length; i++) {
+            for (int j = 0; j < localEdgeArr[i].length; j++) {
+                visited[i][j] = false;
+            }
+        }*/
+    }
+
+    /**
+     * Overridden toString method
+     * @return
+     */
     @Override
     public String toString() {
         StringBuilder cumulativeStringBuilder = new StringBuilder();
