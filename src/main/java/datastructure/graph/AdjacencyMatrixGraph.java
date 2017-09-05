@@ -107,14 +107,45 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
 
 
     public void doDepthFirstTraversal() {
+        int reachableVerticesCounter;
         Graph<T>.Edge[][] localEdgeArr = edgeArr;
-
-        boolean[][] visited = new boolean[localEdgeArr.length][localEdgeArr.length];
-        /*for (int i = 0; i < localEdgeArr.length; i++) {
+        boolean[][] visitedEdge = new boolean[localEdgeArr.length][localEdgeArr.length];
+        int[][] reachableVerticesCount = new int[localEdgeArr.length][localEdgeArr.length];
+        for (int i = 0; i < localEdgeArr.length; i++) {
             for (int j = 0; j < localEdgeArr[i].length; j++) {
-                visited[i][j] = false;
+                if (localEdgeArr[i][j] != null && i != j && !visitedEdge[i][j]) {
+                    reachableVerticesCounter = markReachableVertices(localEdgeArr, visitedEdge, reachableVerticesCount, i, j);
+                    reachableVerticesCount[i][j] = reachableVerticesCounter;
+                }
             }
-        }*/
+        }
+        for (int i = 0; i < localEdgeArr.length; i++) {
+            for (int j = 0; j < localEdgeArr[i].length; j++) {
+                if (reachableVerticesCount[i][j] != 0) {
+                    logger.info(reachableVerticesCount[i][j]+ " vertices are connected to "+localEdgeArr[i][j].getVertexFrom());
+                }
+            }
+        }
+    }
+
+    private int markReachableVertices(Edge[][] localEdgeArr, boolean[][] visitedEdge, int[][] reachableVerticesCount, int i, int j) {
+        int reachableVerticesCounter = 1;
+        visitedEdge[i][j] = true;
+        Edge edge = localEdgeArr[i][j];
+        i = j;
+        for (j = 0; j < localEdgeArr[i].length; j++) {
+            if (localEdgeArr[i][j] != null && i != j && !visitedEdge[i][j]) {
+                markReachableVertices(localEdgeArr, visitedEdge, reachableVerticesCount, i, j);
+                reachableVerticesCounter++;
+            } else if (localEdgeArr[i][j] != null && i != j && visitedEdge[i][j] && reachableVerticesCount[i][j] != 0) {
+                reachableVerticesCounter += reachableVerticesCount[i][j];
+                reachableVerticesCount[i][j] = 0;
+                return reachableVerticesCounter;
+            } else if (localEdgeArr[i][j] != null && i != j && visitedEdge[i][j] && reachableVerticesCount[i][j] == 0) {
+                return reachableVerticesCounter;
+            }
+        }
+        return reachableVerticesCounter;
     }
 
     /**
