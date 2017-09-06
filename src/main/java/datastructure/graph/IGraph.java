@@ -6,7 +6,7 @@ public interface IGraph<T> {
 
     public void addEdge(Graph<T>.Vertex<T> vertexFrom, Graph<T>.Vertex<T> vertexTo, int weight);
 
-    public Graph<T>.Vertex<T>[] getMotherVertices();
+    public Graph<T>.Vertex<T>[][] getMotherVertices();
 
     public Graph<T>.Edge[] getLinkedEdges(Graph<T>.Vertex<T> vertex);
 

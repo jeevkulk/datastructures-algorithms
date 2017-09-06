@@ -94,20 +94,32 @@ public class AdjacencyMatrixGraphTest {
     }
 
     @Test
-    public void testDoDepthFirstTraversal() {
-        adjacencyMatrixGraph = new AdjacencyMatrixGraph<>(5, true);
+    public void testGetMotherVertices() {
+        int numberOfVertices = 5;
+        Graph<String>.Vertex<String>[][] motherVertices = new Graph.Vertex[numberOfVertices][numberOfVertices];
+        adjacencyMatrixGraph = new AdjacencyMatrixGraph<>(numberOfVertices,true);
         Graph.Vertex vertex0 = adjacencyMatrixGraph.createVertex("Zero");
         Graph.Vertex vertex1 = adjacencyMatrixGraph.createVertex("One");
         Graph.Vertex vertex2 = adjacencyMatrixGraph.createVertex("Two");
         Graph.Vertex vertex3 = adjacencyMatrixGraph.createVertex("Three");
         Graph.Vertex vertex4 = adjacencyMatrixGraph.createVertex("Four");
 
-        adjacencyMatrixGraph.addEdge(vertex0, vertex4, 1);
-        adjacencyMatrixGraph.addEdge(vertex1, vertex4, 1);
-        adjacencyMatrixGraph.addEdge(vertex2, vertex4, 1);
         adjacencyMatrixGraph.addEdge(vertex3, vertex4, 1);
+        adjacencyMatrixGraph.addEdge(vertex2, vertex4, 1);
+        adjacencyMatrixGraph.addEdge(vertex1, vertex4, 1);
+        adjacencyMatrixGraph.addEdge(vertex0, vertex4, 1);
 
-        adjacencyMatrixGraph.doDepthFirstTraversal();
-        //Assert.assertEquals("Vertex{id=3, t=Three}", adjacencyMatrixGraph.getLinkedVertices(vertex3)[3].toString());
+        motherVertices = adjacencyMatrixGraph.getMotherVertices();
+        for (int i = 0; i < motherVertices.length; i++) {
+            for (int j = 0; j < motherVertices[i].length; j++) {
+                if (motherVertices[i][j] != null) {
+                    logger.info(motherVertices[i][j].toString());
+                }
+            }
+        }
+        Assert.assertEquals("Vertex{id=0, t=Zero}", motherVertices[0][4].toString());
+        Assert.assertEquals("Vertex{id=1, t=One}", motherVertices[1][4].toString());
+        Assert.assertEquals("Vertex{id=2, t=Two}", motherVertices[2][4].toString());
+        Assert.assertEquals("Vertex{id=3, t=Three}", motherVertices[3][4].toString());
     }
 }

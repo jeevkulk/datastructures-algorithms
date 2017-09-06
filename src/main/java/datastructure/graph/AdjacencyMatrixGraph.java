@@ -66,11 +66,6 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
         }
     }
 
-    @Override
-    public Vertex<T>[] getMotherVertices() {
-        return null;
-    }
-
     /**
      * Gets linked edges
      * @param vertex
@@ -95,7 +90,7 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
     @Override
     public Vertex[] getLinkedVertices(final Vertex<T> vertex) {
         int vertexId = vertex.getId();
-        Graph.Edge[] linkedEdgeArr = new Graph.Edge[this.numberOfVertices];
+        Graph<T>.Edge[] linkedEdgeArr = new Graph.Edge[this.numberOfVertices];
         Vertex[] linkedVerticesArr = new Vertex[this.numberOfVertices];
         for (int i = 0; i < edgeArr[vertexId].length; i++) {
             if (edgeArr[vertexId][i] != null) {
@@ -105,8 +100,12 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
         return linkedVerticesArr;
     }
 
-
-    public void doDepthFirstTraversal() {
+    /**
+     * Does depth first traversal to find mother vertices (vertices from which entire graph can be navigated)
+     */
+    @Override
+    public Graph<T>.Vertex<T>[][] getMotherVertices() {
+        Graph<T>.Vertex<T>[][] motherVertices = new Vertex[this.numberOfVertices][this.numberOfVertices];
         int reachableVerticesCounter;
         Graph<T>.Edge[][] localEdgeArr = edgeArr;
         boolean[][] visitedEdge = new boolean[localEdgeArr.length][localEdgeArr.length];
@@ -122,10 +121,12 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
         for (int i = 0; i < localEdgeArr.length; i++) {
             for (int j = 0; j < localEdgeArr[i].length; j++) {
                 if (reachableVerticesCount[i][j] != 0) {
-                    logger.info(reachableVerticesCount[i][j]+ " vertices are connected to "+localEdgeArr[i][j].getVertexFrom());
+                    motherVertices[i][j] = localEdgeArr[i][j].getVertexFrom();
+                    logger.info(reachableVerticesCount[i][j]+ " vertices are (or vertex is) connected to "+localEdgeArr[i][j].getVertexFrom());
                 }
             }
         }
+        return motherVertices;
     }
 
     private int markReachableVertices(Edge[][] localEdgeArr, boolean[][] visitedEdge, int[][] reachableVerticesCount, int i, int j) {
