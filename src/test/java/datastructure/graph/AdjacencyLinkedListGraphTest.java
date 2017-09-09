@@ -92,4 +92,32 @@ public class AdjacencyLinkedListGraphTest {
         }
         Assert.assertEquals("Vertex{id=3, t=3}", adjacencyLinkedListGraph.getLinkedVertices(vertex3)[0].toString());
     }
+
+    @Test
+    public void testGetMotherVertices() {
+        int numberOfVertices = 5;
+        Graph<String>.Vertex<String>[] motherVertices = new Graph.Vertex[numberOfVertices];
+        adjacencyLinkedListGraph = new AdjacencyLinkedListGraph<>(numberOfVertices,true);
+        Graph.Vertex vertex0 = adjacencyLinkedListGraph.createVertex("Zero");
+        Graph.Vertex vertex1 = adjacencyLinkedListGraph.createVertex("One");
+        Graph.Vertex vertex2 = adjacencyLinkedListGraph.createVertex("Two");
+        Graph.Vertex vertex3 = adjacencyLinkedListGraph.createVertex("Three");
+        Graph.Vertex vertex4 = adjacencyLinkedListGraph.createVertex("Four");
+
+        adjacencyLinkedListGraph.addEdge(vertex3, vertex4, 1);
+        adjacencyLinkedListGraph.addEdge(vertex2, vertex4, 1);
+        adjacencyLinkedListGraph.addEdge(vertex1, vertex4, 1);
+        adjacencyLinkedListGraph.addEdge(vertex0, vertex4, 1);
+
+        motherVertices = adjacencyLinkedListGraph.getMotherVertices();
+        for (int i = 0; i < motherVertices.length; i++) {
+            if (motherVertices[i] != null) {
+                logger.info(motherVertices[i].toString());
+            }
+        }
+        Assert.assertEquals("Vertex{id=0, t=Zero}", motherVertices[0].toString());
+        Assert.assertEquals("Vertex{id=1, t=One}", motherVertices[1].toString());
+        Assert.assertEquals("Vertex{id=2, t=Two}", motherVertices[2].toString());
+        Assert.assertEquals("Vertex{id=3, t=Three}", motherVertices[3].toString());
+    }
 }

@@ -86,9 +86,62 @@ public class AdjacencyLinkedListGraph<T> extends Graph<T> {
         }
     }
 
+    /**
+     * Gets mother vices with depth first traversal
+     * @return
+     */
     @Override
-    public Vertex<T>[][] getMotherVertices() {
-        return null;
+    public Vertex<T>[] getMotherVertices() {
+        Vertex<T>[] verticesArr = this.verticesArr;
+        boolean[] visitedArr = new boolean[numberOfVertices];
+        int[] reachableVerticesCount = new int[numberOfVertices];
+        Vertex[] motherVerticesArr = new Vertex[numberOfVertices];
+        for (int i = 0; i < verticesArr.length; i++) {
+            if (!visitedArr[i]) {
+                visitedArr[i] = true;
+                Edge[] edgeArr = verticesArr[i].getEdgeArr();
+                if (edgeArr != null) {
+                    for (int j = 0; j < edgeArr.length; j++) {
+                        if (edgeArr[j] != null) {
+                            Vertex<T> vertexTo = (Vertex<T>) edgeArr[j].getVertexTo();
+                            reachableVerticesCount[i] = markReachableVertices(verticesArr, visitedArr, reachableVerticesCount, vertexTo, i);
+                        }
+                    }
+                }
+            }
+        }
+        int counter = 0;
+        for (int i = 0; i < reachableVerticesCount.length; i++) {
+            if (reachableVerticesCount[i] != 0) {
+                motherVerticesArr[counter++] = verticesArr[i];
+                logger.info(reachableVerticesCount[i]+ " vertices are (or vertex is) connected to "+verticesArr[i]);
+            }
+        }
+        return motherVerticesArr;
+    }
+
+    private int markReachableVertices(Vertex[] verticesArr, boolean[] visitedArr, int[] reachableVerticesCount, Vertex<T> vertex, int i) {
+        int reachableVerticesCounter = 1;
+        for (i = 0; i < verticesArr.length; i++) {
+            if (verticesArr[i] == vertex) {
+                if (!visitedArr[i] && verticesArr[i].getEdgeArr() != null) {
+                    visitedArr[i] = true;
+                    Edge[] edgeArr = verticesArr[i].getEdgeArr();
+                    if (edgeArr != null) {
+                        for (int j = 0; j < edgeArr.length; j++) {
+                            if (edgeArr[j] != null) {
+                                Vertex<T> vertexTo = (Vertex<T>) edgeArr[j].getVertexTo();
+                                reachableVerticesCounter = markReachableVertices(verticesArr, visitedArr, reachableVerticesCount, vertexTo, i++);
+                                reachableVerticesCounter++;
+                            }
+                        }
+                    }
+                } else {
+                    return reachableVerticesCounter + reachableVerticesCount[i];
+                }
+            }
+        }
+        return reachableVerticesCounter;
     }
 
     @Override

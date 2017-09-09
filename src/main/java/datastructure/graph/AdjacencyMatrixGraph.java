@@ -104,8 +104,8 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
      * Does depth first traversal to find mother vertices (vertices from which entire graph can be navigated)
      */
     @Override
-    public Graph<T>.Vertex<T>[][] getMotherVertices() {
-        Graph<T>.Vertex<T>[][] motherVertices = new Vertex[this.numberOfVertices][this.numberOfVertices];
+    public Graph<T>.Vertex<T>[] getMotherVertices() {
+        Graph<T>.Vertex<T>[] motherVertices = new Vertex[this.numberOfVertices];
         int reachableVerticesCounter;
         Graph<T>.Edge[][] localEdgeArr = edgeArr;
         boolean[][] visitedEdge = new boolean[localEdgeArr.length][localEdgeArr.length];
@@ -118,10 +118,11 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
                 }
             }
         }
+        int counter = 0;
         for (int i = 0; i < localEdgeArr.length; i++) {
             for (int j = 0; j < localEdgeArr[i].length; j++) {
                 if (reachableVerticesCount[i][j] != 0) {
-                    motherVertices[i][j] = localEdgeArr[i][j].getVertexFrom();
+                    motherVertices[counter++] = localEdgeArr[i][j].getVertexFrom();
                     logger.info(reachableVerticesCount[i][j]+ " vertices are (or vertex is) connected to "+localEdgeArr[i][j].getVertexFrom());
                 }
             }
@@ -132,7 +133,6 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
     private int markReachableVertices(Edge[][] localEdgeArr, boolean[][] visitedEdge, int[][] reachableVerticesCount, int i, int j) {
         int reachableVerticesCounter = 1;
         visitedEdge[i][j] = true;
-        Edge edge = localEdgeArr[i][j];
         i = j;
         for (j = 0; j < localEdgeArr[i].length; j++) {
             if (localEdgeArr[i][j] != null && i != j && !visitedEdge[i][j]) {
