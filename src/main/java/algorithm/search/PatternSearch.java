@@ -1,4 +1,4 @@
-package algorithm.string;
+package algorithm.search;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +20,7 @@ public class PatternSearch {
 
     /**
      * Pattern search using Knuth-Morris-Pratt string pattern search algorithm
-     * has a time complexity of O(M+N) and space complexity of O(N)
+     * has a time complexity of O(N) and space complexity of O(N)
      * @param text
      * @param pattern
      * @return
