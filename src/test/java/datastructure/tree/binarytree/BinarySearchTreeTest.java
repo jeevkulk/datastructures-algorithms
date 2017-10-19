@@ -1,6 +1,5 @@
-package datastructure.tree;
+package datastructure.tree.binarytree;
 
-import datastructure.tree.binarytree.BinarySearchTree;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
