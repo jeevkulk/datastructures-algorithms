@@ -1,23 +1,22 @@
 package datastructure.tree;
 
+public class BinarySearchTree<T extends Comparable<T>> {
 
-public class BinarySearchTree {
+    private Node<T> root;
 
-    private Node root;
-
-    public boolean insert(int newElement) {
-        return insert(root, newElement);
+    public boolean insert(T t) {
+        return insert(root, t);
     }
 
-    private boolean insert(Node node, int newElement) {
+    private boolean insert(Node<T> node, T newElement) {
         if (node == null) {
-            node = new Node();
+            node = new Node<T>();
             root = node;
             node.data = newElement;
         } else if (node != null) {
             if (node.data == newElement) {
                 return false;
-            } else if (newElement < node.data) {
+            } else if (newElement.compareTo(node.data) < 0) {
                 if (node.left != null) {
                     return insert(node.left, newElement);
                 } else if (node.left == null) {
@@ -26,7 +25,7 @@ public class BinarySearchTree {
                     node.left = left;
                     return true;
                 }
-            } else if (node.data < newElement) {
+            } else if (node.data.compareTo(newElement) < 0) {
                 if (node.right != null) {
                     return insert(node.right, newElement);
                 } else if (node.right == null) {
@@ -45,18 +44,18 @@ public class BinarySearchTree {
      * @param element
      * @return
      */
-    public boolean contains(int element) {
+    public boolean contains(T element) {
         return contains(root, element);
     }
 
-    private boolean contains(final Node node, int element) {
+    private boolean contains(final Node<T> node, T element) {
         boolean isPresent = false;
         if (node != null) {
             if(node.data == element) {
                 isPresent = true;
-            } else if (element < node.data) {
+            } else if (element.compareTo(node.data) < 0) {
                 isPresent = contains(node.left, element);
-            } else if (node.data < element) {
+            } else if (node.data.compareTo(element) < 0) {
                 isPresent = contains(node.right, element);
             }
         } else {
@@ -76,7 +75,7 @@ public class BinarySearchTree {
         }
     }
 
-    private void printInOrder(Node node) {
+    private void printInOrder(Node<T> node) {
         if(node.left != null) {
             printInOrder(node.left);
         }
@@ -97,7 +96,7 @@ public class BinarySearchTree {
         }
     }
 
-    private void printPreOrder(Node node) {
+    private void printPreOrder(Node<T> node) {
         System.out.print(node.data + " ");
         if (node.left != null) {
             printPreOrder(node.left);
@@ -118,7 +117,7 @@ public class BinarySearchTree {
         }
     }
 
-    private void printPostOrder(Node node) {
+    private void printPostOrder(Node<T> node) {
         if (node.left != null) {
             printPostOrder(node.left);
         }
@@ -129,13 +128,16 @@ public class BinarySearchTree {
     }
 
     public boolean isBinarySearchTree() {
-        return isBinarySearchTree(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        return isBinarySearchTree(root, null, null);
     }
 
-    private boolean isBinarySearchTree(Node node, int min, int max) {
+    private boolean isBinarySearchTree(Node<T> node, T minElement, T maxElement) {
         if (node == null)
             return true;
-        else if (min < node.data && node.data < max && isBinarySearchTree(node.left, min, node.data) && isBinarySearchTree(node.right, node.data, max))
+        else if ((minElement == null || minElement.compareTo(node.data) < 0)
+                && (maxElement == null || node.data.compareTo(maxElement) < 0)
+                && isBinarySearchTree(node.left, minElement, node.data)
+                && isBinarySearchTree(node.right, node.data, maxElement))
             return true;
         else
             return false;
@@ -147,7 +149,7 @@ public class BinarySearchTree {
         return getHeight(root);
     }
 
-    private int getHeight(Node node) {
+    private int getHeight(Node<T> node) {
         if(node == null)
             return 0;
         else
@@ -184,7 +186,7 @@ public class BinarySearchTree {
         return maxWidth;
     }
 
-    private int getWidth(Node node, int depth) {
+    private int getWidth(Node<T> node, int depth) {
         if(node == null)
             return 0;
         else if(depth == 0)
@@ -193,10 +195,10 @@ public class BinarySearchTree {
             return getWidth(node.left,depth - 1) + getWidth(node.right, depth - 1);
     }
 
-    private class Node {
-        int data;
-        Node left;
-        Node right;
+    private class Node<T extends Comparable<T>> {
+        T data;
+        Node<T> left;
+        Node<T> right;
     }
 }
 

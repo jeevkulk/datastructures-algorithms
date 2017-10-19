@@ -9,16 +9,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class BinarySearchTreeTest {
 
-    private BinarySearchTree binarySearchTree = null;
-
-    @Before
-    public void setup() {
-        binarySearchTree = new BinarySearchTree();
-    }
-
     @Test
-    public void testInsert() {
-
+    public void testIntegerInsert() {
+        BinarySearchTree<Integer> binarySearchTree = new BinarySearchTree<>();
         binarySearchTree.insert(5);
         binarySearchTree.insert(3);
         binarySearchTree.insert(7);
@@ -40,7 +33,33 @@ public class BinarySearchTreeTest {
     }
 
     @Test
+    public void testStringInsert() {
+        BinarySearchTree<String> binarySearchTree = new BinarySearchTree<>();
+
+        binarySearchTree.insert("IBBS");
+        binarySearchTree.insert("OrbiOne");
+        binarySearchTree.insert("LDS");
+        binarySearchTree.insert("PayableFinancing");
+        binarySearchTree.insert("Astellas");
+        binarySearchTree.insert("JVE");
+        binarySearchTree.insert("LEMAP");
+        binarySearchTree.insert("LEBCT");
+        binarySearchTree.insert("TradeUtil");
+        binarySearchTree.insert("Compass");
+
+        binarySearchTree.printInOrder();
+        binarySearchTree.printPreOrder();
+        binarySearchTree.printPostOrder();
+
+        Assert.assertTrue(binarySearchTree.contains("Compass"));
+        Assert.assertTrue(binarySearchTree.contains("JVE"));
+        Assert.assertFalse(binarySearchTree.contains("COLT"));
+        Assert.assertFalse(binarySearchTree.contains("GRID"));
+    }
+
+    @Test
     public void testIsBinarySearchTree() {
+        BinarySearchTree<Integer> binarySearchTree = new BinarySearchTree<>();
         binarySearchTree.insert(4);
         binarySearchTree.insert(2);
         binarySearchTree.insert(6);
@@ -54,6 +73,7 @@ public class BinarySearchTreeTest {
 
     @Test
     public void testGetHeight() {
+        BinarySearchTree<Integer> binarySearchTree = new BinarySearchTree<>();
         binarySearchTree.insert(4);
         binarySearchTree.insert(2);
         binarySearchTree.insert(6);
@@ -67,6 +87,7 @@ public class BinarySearchTreeTest {
 
     @Test
     public void testGetMaxWidth() {
+        BinarySearchTree<Integer> binarySearchTree = new BinarySearchTree<>();
         binarySearchTree.insert(4);
         binarySearchTree.insert(2);
         binarySearchTree.insert(6);
