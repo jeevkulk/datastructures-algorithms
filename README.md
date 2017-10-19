@@ -1,6 +1,6 @@
 # List of Algorithms
 
-#1. Array Algorithms
+# 1. Array Algorithms
 
 **1.1 Rotate 1D Array:** Given a one-dimensional array, write a program to rotate the array by N elements. This needs to be done without making a copy of entire array.
 Refer: src/main/java/algorithm/array/ArrayRotation
