@@ -12,13 +12,13 @@ Refer: src/main/java/algorithm/array/MatrixRotation
 Refer: src/main/java/algorithm/array/MaxSumOfSubArray
 
 
-#2. Caching Algorithms
+# 2. Caching Algorithms
 
 **2.1 Caching Algorithm:** Provides LRU and LFU caching service using LinkedList 
 Refer: src/main/java/algorithm/cache/service/CacheService
 
 
-#3. Search Algorithms
+# 3. Search Algorithms
 
 **3.1 Knuth-Morris-Pratt Pattern Search Algorithm:** Given a string pattern - find the first occurrence that pattern in the text using Knuth-Morris-Pratt algorithm.
 Refer: src/main/java/algorithm/search/KnuthMorrisPrattPatternSearch 
@@ -35,7 +35,7 @@ Refer: src/main/java/algorithm/search/RabinKarpPatternSearch
  Refer: src/main/java/algorithm/search/ShakespeareWordSearch
 
 
-#4. Sorting Algorithms
+# 4. Sorting Algorithms
  
 **4.1 BubbleSort**
 Refer: src/main/java/algorithm/sort/BubbleSort
@@ -50,7 +50,7 @@ Refer: src/main/java/algorithm/sort/SelectionSort
 Refer: src/main/java/algorithm/sort/MergeSort
 
 
-#5. String Algorithms
+# 5. String Algorithms
 
 **5.1. Is Unique:** Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structures?
 Refer: src/main/java/algorithm/string/HasUniqueChars
@@ -66,7 +66,7 @@ Output: True (permutations: "taco cat", "atco eta", etc.)_
 Refer: src/main/java/algorithm/string/CheckPalindromePermutation
 
 
-#6. Tree Algorithms 
+# 6. Tree Algorithms 
 
 **6.1. Puzzle 1 :** Get maximum number of movies that can be viewed in a day. This uses maximum depth of a tree using DFS. 
 Refer: src/main/java/algorithm/tree/MaxNumberOfMoviesCalculator
@@ -74,7 +74,7 @@ Refer: src/main/java/algorithm/tree/MaxNumberOfMoviesCalculator
  
 # List of Data Structures
  
-#1. Graph
+# 1. Graph
 
 **1.1 Adjacency LinkedList Graph**
 Graph data structure is built using Adjacency LinkedList storage.   
@@ -85,7 +85,7 @@ Graph data structure is built using Adjacency 2-D array as storage.
 Refer: src/main/java/datastructure/graph/AdjacencyMatrixGraph
 
 
-#2. Map Implementation 
+# 2. Map Implementation 
  
 **2.1 HashMap Implementation**
 Refer: src/main/java/datastructure/map/HashMap
@@ -95,12 +95,12 @@ This has special enhancement for LFU caching (LRU is also present)
 Refer: src/main/java/datastructure/map/LinkedHashMap
 
 
-#3. Queue Implementation
+# 3. Queue Implementation
 
 **3.1. ArrayBlockingQueue** Refer: src/main/java/datastructure/queue/ArrayBlockingQueue
 
 
-#4. Tree Implementation
+# 4. Tree Implementation
 
 **4.1 Binary Search Tree** Refer: src/main/java/datastructure/tree/BinarySearchTree
 
