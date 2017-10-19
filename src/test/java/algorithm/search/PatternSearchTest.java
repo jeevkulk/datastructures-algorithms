@@ -12,16 +12,23 @@ public class PatternSearchTest {
 
     private PatternSearch patternSearch = null;
 
+    String text = "ABCDABCXABXABCDABCDABCY";
+    String pattern = "ABCDABCY";
+
     @Before
     public void setup() {
         patternSearch = new PatternSearch();
     }
 
     @Test
-    public void testPatternSearchUsingKMPAlgorithm() {
-        String text = "ABCDABCXABXABCDABCDABCY";
-        String pattern = "ABCDABCY";
-        int firstOccurrence = patternSearch.getFirstOccurrence(text, pattern, PatternSearch.PatternSearchAlgorithm.KnuthMorrisPratt);
+    public void testPatternSearchUsingRabinKarpAlgorithm() {
+        int firstOccurrence = patternSearch.getFirstOccurrence(text, pattern, PatternSearch.PatternSearchAlgorithm.RABIN_KARP);
+        Assert.assertEquals(15, firstOccurrence);
+    }
+
+    @Test
+    public void testPatternSearchUsingKnuthMorrisPrattAlgorithm() {
+        int firstOccurrence = patternSearch.getFirstOccurrence(text, pattern, PatternSearch.PatternSearchAlgorithm.KNUTH_MORRIS_PRATT);
         Assert.assertEquals(15, firstOccurrence);
     }
 }
