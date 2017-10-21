@@ -23,7 +23,10 @@ Refer: src/main/java/algorithm/sort/InsertionSort
 **2.3 SelectionSort**
 Refer: src/main/java/algorithm/sort/SelectionSort
  
-**2.4 MergeSort**
+**2.4 QuickSort**
+Refer: src/main/java/algorithm/sort/QuickSort
+ 
+**2.5 MergeSort**
 Refer: src/main/java/algorithm/sort/MergeSort
 
 
@@ -91,7 +94,7 @@ Refer: src/main/java/datastructure/map/LinkedHashMap
 
 # 3. Tree Implementation
 
-**3.1 Binary Search Tree** Refer: src/main/java/datastructure/tree/binarytree/BinaryTree
+**3.1 Binary Tree** Refer: src/main/java/datastructure/tree/binarytree/BinaryTree
 
 **3.2 Binary Search Tree** Refer: src/main/java/datastructure/tree/binarytree/BinarySearchTree
 
