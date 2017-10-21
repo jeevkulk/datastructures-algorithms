@@ -12,12 +12,12 @@ public class BinaryTree<T extends Comparable<T>> implements Tree<T> {
      * @return
      */
     @Override
-    public boolean insert(T t) {
-        return insert(root, t);
+    public void add(T t) {
+        add(root, t);
     }
 
-    protected boolean insert(Node<T> node, T newElement) {
-        return false;
+    protected void add(Node<T> node, T newElement) {
+        //TODO: To be implemented
     }
 
     /**
@@ -37,13 +37,18 @@ public class BinaryTree<T extends Comparable<T>> implements Tree<T> {
 
     /**
      * Deletes element from the tree and returns true on success
-     * @param t
      * @return
      */
     @Override
-    public boolean delete(T t) {
+    public T poll() {
         //TODO: To be implemented
-        return false;
+        return null;
+    }
+
+    @Override
+    public T peek() {
+        //TODO: To be implemented
+        return null;
     }
 
     /**

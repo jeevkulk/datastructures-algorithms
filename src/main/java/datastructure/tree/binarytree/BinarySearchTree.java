@@ -3,35 +3,32 @@ package datastructure.tree.binarytree;
 public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
 
     @Override
-    protected boolean insert(Node<T> node, T newElement) {
+    protected void add(Node<T> node, T newElement) {
         if (node == null) {
             node = new Node<T>();
             root = node;
             node.data = newElement;
         } else if (node != null) {
             if (node.data == newElement) {
-                return false;
+                throw new IllegalStateException();
             } else if (newElement.compareTo(node.data) < 0) {
                 if (node.left != null) {
-                    return insert(node.left, newElement);
+                    add(node.left, newElement);
                 } else if (node.left == null) {
                     Node left = new Node();
                     left.data = newElement;
                     node.left = left;
-                    return true;
                 }
             } else if (node.data.compareTo(newElement) < 0) {
                 if (node.right != null) {
-                    return insert(node.right, newElement);
+                    add(node.right, newElement);
                 } else if (node.right == null) {
                     Node right = new Node();
                     right.data = newElement;
                     node.right = right;
-                    return true;
                 }
             }
         }
-        return true;
     }
 
     @Override

@@ -11,15 +11,15 @@ public class BinarySearchTreeTest {
     @Test
     public void testIntegerInsert() {
         BinarySearchTree<Integer> binarySearchTree = new BinarySearchTree<>();
-        binarySearchTree.insert(5);
-        binarySearchTree.insert(3);
-        binarySearchTree.insert(7);
-        binarySearchTree.insert(4);
-        binarySearchTree.insert(6);
-        binarySearchTree.insert(2);
-        binarySearchTree.insert(8);
-        binarySearchTree.insert(1);
-        binarySearchTree.insert(9);
+        binarySearchTree.add(5);
+        binarySearchTree.add(3);
+        binarySearchTree.add(7);
+        binarySearchTree.add(4);
+        binarySearchTree.add(6);
+        binarySearchTree.add(2);
+        binarySearchTree.add(8);
+        binarySearchTree.add(1);
+        binarySearchTree.add(9);
 
         binarySearchTree.printInOrder();
         binarySearchTree.printPreOrder();
@@ -35,16 +35,16 @@ public class BinarySearchTreeTest {
     public void testStringInsert() {
         BinarySearchTree<String> binarySearchTree = new BinarySearchTree<>();
 
-        binarySearchTree.insert("IBBS");
-        binarySearchTree.insert("OrbiOne");
-        binarySearchTree.insert("LDS");
-        binarySearchTree.insert("PayableFinancing");
-        binarySearchTree.insert("Astellas");
-        binarySearchTree.insert("JVE");
-        binarySearchTree.insert("LEMAP");
-        binarySearchTree.insert("LEBCT");
-        binarySearchTree.insert("TradeUtil");
-        binarySearchTree.insert("Compass");
+        binarySearchTree.add("IBBS");
+        binarySearchTree.add("OrbiOne");
+        binarySearchTree.add("LDS");
+        binarySearchTree.add("PayableFinancing");
+        binarySearchTree.add("Astellas");
+        binarySearchTree.add("JVE");
+        binarySearchTree.add("LEMAP");
+        binarySearchTree.add("LEBCT");
+        binarySearchTree.add("TradeUtil");
+        binarySearchTree.add("Compass");
 
         binarySearchTree.printInOrder();
         binarySearchTree.printPreOrder();
@@ -59,13 +59,13 @@ public class BinarySearchTreeTest {
     @Test
     public void testIsBinarySearchTree() {
         BinarySearchTree<Integer> binarySearchTree = new BinarySearchTree<>();
-        binarySearchTree.insert(4);
-        binarySearchTree.insert(2);
-        binarySearchTree.insert(6);
-        binarySearchTree.insert(1);
-        binarySearchTree.insert(3);
-        binarySearchTree.insert(5);
-        binarySearchTree.insert(7);
+        binarySearchTree.add(4);
+        binarySearchTree.add(2);
+        binarySearchTree.add(6);
+        binarySearchTree.add(1);
+        binarySearchTree.add(3);
+        binarySearchTree.add(5);
+        binarySearchTree.add(7);
 
         Assert.assertTrue(binarySearchTree.isBinarySearchTree());
     }
@@ -73,13 +73,13 @@ public class BinarySearchTreeTest {
     @Test
     public void testGetHeight() {
         BinarySearchTree<Integer> binarySearchTree = new BinarySearchTree<>();
-        binarySearchTree.insert(4);
-        binarySearchTree.insert(2);
-        binarySearchTree.insert(6);
-        binarySearchTree.insert(1);
-        binarySearchTree.insert(3);
-        binarySearchTree.insert(5);
-        binarySearchTree.insert(7);
+        binarySearchTree.add(4);
+        binarySearchTree.add(2);
+        binarySearchTree.add(6);
+        binarySearchTree.add(1);
+        binarySearchTree.add(3);
+        binarySearchTree.add(5);
+        binarySearchTree.add(7);
 
         Assert.assertTrue(binarySearchTree.getHeight() == 3);
     }
@@ -87,13 +87,13 @@ public class BinarySearchTreeTest {
     @Test
     public void testGetMaxWidth() {
         BinarySearchTree<Integer> binarySearchTree = new BinarySearchTree<>();
-        binarySearchTree.insert(4);
-        binarySearchTree.insert(2);
-        binarySearchTree.insert(6);
-        binarySearchTree.insert(1);
-        binarySearchTree.insert(3);
-        binarySearchTree.insert(5);
-        binarySearchTree.insert(7);
+        binarySearchTree.add(4);
+        binarySearchTree.add(2);
+        binarySearchTree.add(6);
+        binarySearchTree.add(1);
+        binarySearchTree.add(3);
+        binarySearchTree.add(5);
+        binarySearchTree.add(7);
 
         Assert.assertTrue(binarySearchTree.getMaxWidth() == 4);
     }
