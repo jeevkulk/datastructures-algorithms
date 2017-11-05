@@ -100,6 +100,33 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
         return linkedVerticesArr;
     }
 
+    public Vertex[] getAllVertices() {
+        int counter = 0;
+        Graph<T>.Vertex<T>[] allVertices = new Vertex[this.numberOfVertices];
+        Graph<T>.Edge[][] localEdgeArr = edgeArr;
+        boolean[][] visitedEdge = new boolean[localEdgeArr.length][localEdgeArr.length];
+        for (int i = 0; i < localEdgeArr.length; i++) {
+            for (int j = 0; j < localEdgeArr[i].length; j++) {
+                if (localEdgeArr[i][j] != null && i != j && !visitedEdge[i][j]) {
+                    allVertices[counter++] = localEdgeArr[i][j].getVertexFrom();
+                    depthFirstTraversal(localEdgeArr, visitedEdge, allVertices, counter, i, j);
+                }
+            }
+        }
+        return allVertices;
+    }
+
+    private void depthFirstTraversal(Edge[][] localEdgeArr, boolean[][] visitedEdge, Vertex[] allVertices, int counter, int i, int j) {
+        visitedEdge[i][j] = true;
+        i = j;
+        for (j = 0; j < localEdgeArr[i].length; j++) {
+            if (localEdgeArr[i][j] != null && i != j && !visitedEdge[i][j]) {
+                allVertices[counter++] = localEdgeArr[i][j].getVertexTo();
+                depthFirstTraversal(localEdgeArr, visitedEdge, allVertices, counter, i, j);
+            }
+        }
+    }
+
     /**
      * Does depth first traversal to find mother vertices (vertices from which entire graph can be navigated)
      */

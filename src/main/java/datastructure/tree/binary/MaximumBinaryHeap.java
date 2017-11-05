@@ -47,15 +47,15 @@ public class MaximumBinaryHeap<T extends Comparable<T>> extends BinaryHeap<T> {
         if (index1 < 0 || index1 > currentSize)
             throw new IllegalStateException();
 
-        if (hasLeftChild(index1) && hasParent(index1)) {
+        if (hasLeftChild(index1) && hasRightChild(index1)) {
             if (getLeftChild(index1).compareTo(getRightChild(index1)) < 0 && getLeftChild(index1).compareTo(objectArr[index1]) > 0) {
-                index2 = getLeftChildIndex(index1);
-            } else if (getLeftChild(index1).compareTo(getRightChild(index1)) > 0 && getRightChild(index1).compareTo(objectArr[index1]) > 0) {
                 index2 = getRightChildIndex(index1);
+            } else if (getLeftChild(index1).compareTo(getRightChild(index1)) > 0 && getRightChild(index1).compareTo(objectArr[index1]) > 0) {
+                index2 = getLeftChildIndex(index1);
             }
-        } else if (!hasLeftChild(index1) && getRightChild(index1).compareTo(objectArr[index1]) > 0) {
+        } else if (!hasLeftChild(index1) && hasRightChild(index1) && getRightChild(index1).compareTo(objectArr[index1]) > 0) {
             index2 = getRightChildIndex(index1);
-        } else if (!hasRightChild(index1) && getLeftChild(index1).compareTo(objectArr[index1]) > 0) {
+        } else if (!hasRightChild(index1) && hasLeftChild(index1) && getLeftChild(index1).compareTo(objectArr[index1]) > 0) {
             index2 = getLeftChildIndex(index1);
         }
         if (index2 > 0) {

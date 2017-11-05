@@ -5,7 +5,7 @@ public abstract class Graph<T> implements IGraph<T> {
     protected int numberOfVertices;
     protected boolean directed;
 
-    protected class Vertex<T> {
+    public class Vertex<T> {
         private int id;
         private T t;
 
@@ -39,7 +39,7 @@ public abstract class Graph<T> implements IGraph<T> {
         }
     }
 
-    protected class Edge {
+    public class Edge {
         private int id;
         private Graph.Vertex vertexFrom;
         private Graph.Vertex vertexTo;

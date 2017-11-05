@@ -102,7 +102,7 @@ public abstract class BinaryHeap<T extends Comparable<T>> implements Tree<T> {
      * Helper methods to get parent, left child and right child indices
      */
     protected int getParentIndex(int index) {
-        return (index - 2) / 2;
+        return (index - 1) / 2;
     }
     protected int getLeftChildIndex(int index) {
         return (index * 2) + 1;

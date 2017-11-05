@@ -51,4 +51,29 @@ public class MinimumBinaryHeapTest {
         Assert.assertFalse(minimumHeap.contains("COLT"));
         Assert.assertFalse(minimumHeap.contains("GRID"));
     }
+
+    @Test
+    public void testIntegerModify() {
+        MinimumBinaryHeap<Integer> minimumHeap = new MinimumBinaryHeap<>();
+        minimumHeap.add(5);
+        minimumHeap.add(3);
+        minimumHeap.add(7);
+        minimumHeap.add(4);
+        minimumHeap.add(6);
+        minimumHeap.add(2);
+        minimumHeap.add(8);
+        minimumHeap.add(1);
+        minimumHeap.add(9);
+
+        minimumHeap.printHeap();
+        Assert.assertTrue(minimumHeap.peek() == 1);
+
+        minimumHeap.modify(0,10);
+
+        minimumHeap.printHeap();
+        Assert.assertTrue(minimumHeap.peek() == 2);
+
+        Assert.assertTrue(minimumHeap.contains(10));
+        Assert.assertFalse(minimumHeap.contains(1));
+    }
 }

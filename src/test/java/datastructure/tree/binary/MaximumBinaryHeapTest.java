@@ -51,4 +51,29 @@ public class MaximumBinaryHeapTest {
         Assert.assertFalse(maximumHeap.contains("COLT"));
         Assert.assertFalse(maximumHeap.contains("GRID"));
     }
+
+    @Test
+    public void testIntegerModify() {
+        MaximumBinaryHeap<Integer> maximumHeap = new MaximumBinaryHeap<>();
+        maximumHeap.add(5);
+        maximumHeap.add(3);
+        maximumHeap.add(7);
+        maximumHeap.add(4);
+        maximumHeap.add(6);
+        maximumHeap.add(2);
+        maximumHeap.add(8);
+        maximumHeap.add(1);
+        maximumHeap.add(9);
+
+        maximumHeap.printHeap();
+        Assert.assertTrue(maximumHeap.peek() == 9);
+
+        maximumHeap.modify(0,0);
+
+        maximumHeap.printHeap();
+        Assert.assertTrue(maximumHeap.peek() == 8);
+
+        Assert.assertTrue(maximumHeap.contains(0));
+        Assert.assertFalse(maximumHeap.contains(9));
+    }
 }

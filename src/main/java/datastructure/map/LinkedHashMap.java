@@ -51,7 +51,7 @@ public class LinkedHashMap<K, V> extends HashMap<K, V> implements IMap<K, V> {
         newNode.setNext(null);
         return newNode;
         /*LinkedHashMap.Node<K, V> oldNode = (LinkedHashMap.Node<K, V>)node;
-        LinkedHashMap.Node<K, V> newNode = new LinkedHashMap.Node<K, V>(oldNode.getKey(), oldNode.getValue());
+        LinkedHashMap.Node<K, V> newNode = new LinkedHashMap.Node<K, V>(oldNode.getKey(), oldNode.getWeight());
         newNode.setBefore(oldNode.getBefore());
         newNode.setAfter(oldNode.getAfter());
         newNode.setAccessCount(oldNode.getAccessCount());
