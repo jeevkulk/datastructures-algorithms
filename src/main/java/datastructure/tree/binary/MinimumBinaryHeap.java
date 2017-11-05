@@ -1,23 +1,32 @@
-package datastructure.tree.binarytree;
+package datastructure.tree.binary;
 
 import java.lang.reflect.Array;
 
-public class MinimumHeap<T extends Comparable<T>> extends Heap<T> {
+public class MinimumBinaryHeap<T extends Comparable<T>> extends BinaryHeap<T> {
 
 
-    public MinimumHeap() {
+    public MinimumBinaryHeap() {
         this(DEFAULT_TYPE, DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR);
     }
 
-    public MinimumHeap(Class<?> type) {
+    public MinimumBinaryHeap(Class<?> type) {
         this(type, DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR);
     }
 
     @SuppressWarnings("unchecked")
-    public MinimumHeap(Class<?> type, int initialCapacity, float loadFactor) {
+    public MinimumBinaryHeap(Class<?> type, int initialCapacity, float loadFactor) {
         objectArr = (T[]) Array.newInstance(type, initialCapacity);
         this.initialCapacity = initialCapacity;
         this.loadFactor = loadFactor;
+    }
+
+    public void modify(int index, T newValue) {
+        T oldValue = objectArr[index];
+        objectArr[index] = newValue;
+        if (oldValue.compareTo(newValue) < 0)
+            heapifyDown(index);
+        else
+            heapifyUp(index);
     }
 
     @Override

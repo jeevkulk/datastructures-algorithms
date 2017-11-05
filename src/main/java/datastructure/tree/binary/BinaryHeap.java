@@ -1,8 +1,8 @@
-package datastructure.tree.binarytree;
+package datastructure.tree.binary;
 
 import datastructure.tree.Tree;
 
-public abstract class Heap<T extends Comparable<T>> implements Tree<T> {
+public abstract class BinaryHeap<T extends Comparable<T>> implements Tree<T> {
 
     protected T[] objectArr = null;
 
@@ -36,16 +36,6 @@ public abstract class Heap<T extends Comparable<T>> implements Tree<T> {
         return false;
     }
 
-    public void delete(T t) {
-        for (int i = 0; i < currentSize; i++) {
-            if (objectArr[i] == t) {
-                objectArr[i] = null;
-                currentSize--;
-                heapifyDown(i);
-            }
-        }
-    }
-
     @Override
     public T peek() {
         if (currentSize == 0)
@@ -62,6 +52,16 @@ public abstract class Heap<T extends Comparable<T>> implements Tree<T> {
         currentSize--;
         heapifyDown(0);
         return t;
+    }
+
+    public void delete(T t) {
+        for (int i = 0; i < currentSize; i++) {
+            if (objectArr[i] == t) {
+                objectArr[i] = null;
+                currentSize--;
+                heapifyDown(i);
+            }
+        }
     }
 
     /**
@@ -87,13 +87,13 @@ public abstract class Heap<T extends Comparable<T>> implements Tree<T> {
     }
 
     /**
-     * Abstract method to be implemented by MinimumHeap and MaximumHeap
+     * Abstract method to be implemented by MinimumBinaryHeap and MaximumBinaryHeap
      * @param index
      */
     protected abstract void heapifyUp(int index);
 
     /**
-     * Abstract method to be implemented by MinimumHeap and MaximumHeap
+     * Abstract method to be implemented by MinimumBinaryHeap and MaximumBinaryHeap
      * @param index
      */
     protected abstract void heapifyDown(int index);

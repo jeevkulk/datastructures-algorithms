@@ -1,4 +1,4 @@
-package datastructure.tree.binarytree;
+package datastructure.tree.binary;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -6,11 +6,11 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MaximumHeapTest {
+public class MaximumBinaryHeapTest {
 
     @Test
     public void testIntegerAdd() {
-        MaximumHeap<Integer> maximumHeap = new MaximumHeap<>();
+        MaximumBinaryHeap<Integer> maximumHeap = new MaximumBinaryHeap<>();
         maximumHeap.add(5);
         maximumHeap.add(3);
         maximumHeap.add(7);
@@ -31,7 +31,7 @@ public class MaximumHeapTest {
 
     @Test
     public void testStringInsert() {
-        MaximumHeap<String> maximumHeap = new MaximumHeap<>(String.class);
+        MaximumBinaryHeap<String> maximumHeap = new MaximumBinaryHeap<>(String.class);
 
         maximumHeap.add("IBBS");
         maximumHeap.add("OrbiOne");

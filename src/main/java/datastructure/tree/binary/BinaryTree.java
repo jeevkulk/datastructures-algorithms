@@ -1,4 +1,4 @@
-package datastructure.tree.binarytree;
+package datastructure.tree.binary;
 
 import datastructure.tree.Tree;
 

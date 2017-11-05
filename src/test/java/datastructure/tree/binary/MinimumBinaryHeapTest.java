@@ -1,4 +1,4 @@
-package datastructure.tree.binarytree;
+package datastructure.tree.binary;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -6,11 +6,11 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MinimumHeapTest {
+public class MinimumBinaryHeapTest {
 
     @Test
     public void testIntegerAdd() {
-        MinimumHeap<Integer> minimumHeap = new MinimumHeap<>();
+        MinimumBinaryHeap<Integer> minimumHeap = new MinimumBinaryHeap<>();
         minimumHeap.add(5);
         minimumHeap.add(3);
         minimumHeap.add(7);
@@ -31,7 +31,7 @@ public class MinimumHeapTest {
 
     @Test
     public void testStringInsert() {
-        MinimumHeap<String> minimumHeap = new MinimumHeap<>(String.class);
+        MinimumBinaryHeap<String> minimumHeap = new MinimumBinaryHeap<>(String.class);
 
         minimumHeap.add("IBBS");
         minimumHeap.add("OrbiOne");
