@@ -27465,7 +27465,7 @@ valour
 Valour
 valourously
 valuation
-heapWeight
+weight
 valued
 valueless
 values
@@ -28277,7 +28277,7 @@ weighing
 Weighing
 weighs
 Weighs
-heapWeight
+weight
 weightier
 weightless
 weights
