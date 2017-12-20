@@ -7,11 +7,9 @@ import datastructure.graph.IGraph;
 import datastructure.tree.binary.MinimumBinaryHeap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sun.security.provider.certpath.Vertex;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PrimsMinimumSpanningTree {
 
@@ -22,19 +20,21 @@ public class PrimsMinimumSpanningTree {
      * all other vertices are reachable
      */
     private IGraph<Integer> graph = null;
-    private MinimumBinaryHeap<HeapMap> verticesHeap = null;
+    private Map<Graph.Vertex, HeapMap> heapMapVertexMap = null;
+    private MinimumBinaryHeap<HeapMap> minimumBinaryHeap = null;
 
     /**
      * This map is redundant in this case as I am storing the weights, vertexFrom and vertexTo in edge
      * unlike what is traditionally done. Traditionally, this would get the edge for the vertex that
-     * can be reached with minimum weight
+     * can be reached with minimum heapWeight
      */
     private Map<Graph.Vertex, Graph.Edge> vertexEdgeMap = new HashMap<>();
     private List<Graph.Edge> mstEdges = new ArrayList<>();
+    private Set<Graph.Vertex> verticesConsideredSet = new HashSet<>();
 
     public PrimsMinimumSpanningTree(IGraph<Integer> graph) {
         this.graph = graph;
-        verticesHeap = new MinimumBinaryHeap<>(Integer.class);
+        minimumBinaryHeap = new MinimumBinaryHeap<>(HeapMap.class);
     }
 
     public void findMinimumSpanningTree() {
@@ -50,45 +50,60 @@ public class PrimsMinimumSpanningTree {
             }
             initializeVerticesHeap(((AdjacencyMatrixGraph) graph).getAllVertices(), motherVertices[0]);
 
-            while (verticesHeap.peek() != null) {
-                HeapMap heapMap = verticesHeap.poll();
+            while (minimumBinaryHeap.size() > 0) {
+                HeapMap heapMap = minimumBinaryHeap.poll();
+                verticesConsideredSet.add(heapMap.getVertex());
                 Graph.Edge[] linkedEdges = ((AdjacencyMatrixGraph) graph).getLinkedEdges(heapMap.getVertex());
-                int minimumWeight = Integer.MAX_VALUE;
+                int minimumHeapWeight = Integer.MAX_VALUE;
                 Graph.Edge edgeWithMinimumWeight = null;
                 Graph.Vertex closestVertex = null;
                 for (Graph.Edge edge : linkedEdges) {
-                    verticesHeap.modify(edge.getVertexTo().getId(), new HeapMap(edge.getVertexTo(), minimumWeight));
-                    vertexEdgeMap.put(edge.getVertexTo(), edge);
-                    if (edge.getWeight() < minimumWeight) {
-                        minimumWeight = edge.getWeight();
-                        edgeWithMinimumWeight = edge;
-                        closestVertex = edge.getVertexTo();
+                    if (edge != null && !verticesConsideredSet.contains(edge.getVertexTo())) {
+                        // Modify the weight in the heap - so that it gets sorted
+                        minimumBinaryHeap.modify(heapMapVertexMap.get(edge.getVertexTo()), new HeapMap(edge.getVertexTo(), edge.getWeight()));
+                        // Add the vertex to map - to map the vertex to edge
+                        vertexEdgeMap.put(edge.getVertexTo(), edge);
+                        if (edge.getWeight() < minimumHeapWeight) {
+                            minimumHeapWeight = edge.getWeight();
+                            edgeWithMinimumWeight = edge;
+                            closestVertex = edge.getVertexTo();
+                        }
                     }
                 }
-                //mstEdges.add(edgeWithMinimumWeight); // Had we used this vertexEdgeMap would have been redundant
-                mstEdges.add(vertexEdgeMap.get(closestVertex)); // Traditional way
+                if (closestVertex != null) {
+                    //mstEdges.add(edgeWithMinimumWeight); // Had we used this, vertexEdgeMap would have been redundant
+                    mstEdges.add(vertexEdgeMap.get(closestVertex)); // Traditional way
+                }
             }
         } else if (graph instanceof AdjacencyLinkedListGraph) {
             throw new IllegalArgumentException();
         }
+        for (Graph.Edge mstEdge : mstEdges) {
+            System.out.println(mstEdge.toString());
+        }
     }
 
     private void initializeVerticesHeap(Graph.Vertex[] vertices, Graph.Vertex motherVertex) {
+        HeapMap heapMap = null;
+        heapMapVertexMap = new HashMap<>();
         for (int i = 0; i < vertices.length; i++) {
-            if (motherVertex.getId() == vertices[i].getId())
-                verticesHeap.add(new HeapMap(vertices[i], 0));
-            else
-                verticesHeap.add(new HeapMap(vertices[i], Integer.MAX_VALUE));
+            if (motherVertex.getId() == vertices[i].getId()) {
+                heapMap = new HeapMap(vertices[i], 0);
+            } else {
+                heapMap = new HeapMap(vertices[i], Integer.MAX_VALUE);
+            }
+            heapMapVertexMap.put(vertices[i], heapMap);
+            minimumBinaryHeap.add(heapMap);
         }
     }
 
     private class HeapMap implements Comparable<HeapMap> {
         private Graph.Vertex vertex;
-        private int weight;
+        private int heapWeight;
 
-        public HeapMap(Graph.Vertex vertex, int weight) {
+        public HeapMap(Graph.Vertex vertex, int heapWeight) {
             this.vertex = vertex;
-            this.weight = weight;
+            this.heapWeight = heapWeight;
         }
 
         public Graph.Vertex getVertex() {
@@ -99,17 +114,28 @@ public class PrimsMinimumSpanningTree {
             this.vertex = vertex;
         }
 
-        public int getWeight() {
-            return weight;
+        public int getHeapWeight() {
+            return heapWeight;
         }
 
-        public void setWeight(int weight) {
-            this.weight = weight;
+        public void setHeapWeight(int heapWeight) {
+            this.heapWeight = heapWeight;
         }
 
         @Override
         public int compareTo(HeapMap heapMap) {
-            return (weight > heapMap.getWeight()) ? 1 : (weight < (int)heapMap.getWeight()) ? -1 : 0;
+            return (heapWeight > heapMap.getHeapWeight()) ? 1 : (heapWeight < (int)heapMap.getHeapWeight()) ? -1 : 0;
+        }
+
+        @Override
+        public int hashCode() {
+            return vertex.getId();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            HeapMap heapMap = (HeapMap)obj;
+            return vertex.getId() == heapMap.vertex.getId();
         }
     }
 }

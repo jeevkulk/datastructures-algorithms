@@ -20,13 +20,33 @@ public class MinimumBinaryHeap<T extends Comparable<T>> extends BinaryHeap<T> {
         this.loadFactor = loadFactor;
     }
 
-    public void modify(int index, T newValue) {
+    public void modify(T objectToModify, T newObject) {
+        if (objectToModify == null || newObject == null) {
+            throw new IllegalStateException();
+        }
+        int index = getObjectIndex(objectToModify);
         T oldValue = objectArr[index];
-        objectArr[index] = newValue;
-        if (oldValue.compareTo(newValue) < 0)
+        objectArr[index] = newObject;
+        if (oldValue.compareTo(newObject) < 0)
             heapifyDown(index);
         else
             heapifyUp(index);
+    }
+
+    private int getObjectIndex(T object) {
+        int index = 0;
+        boolean objectFound = false;
+        for (int i = 0; i < objectArr.length; i++) {
+            if (objectArr[i] != null && object.equals(objectArr[i])) {
+                index = i;
+                objectFound = true;
+                break;
+            }
+        }
+        if (!objectFound) {
+            throw new IllegalArgumentException();
+        }
+        return index;
     }
 
     @Override

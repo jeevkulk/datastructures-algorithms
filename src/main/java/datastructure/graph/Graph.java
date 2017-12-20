@@ -37,6 +37,17 @@ public abstract class Graph<T> implements IGraph<T> {
                     ", t=" + t +
                     '}';
         }
+
+        @Override
+        public int hashCode() {
+            return this.getId();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            Vertex<T> vertex = (Vertex<T>)obj;
+            return this.getId() == vertex.getId();
+        }
     }
 
     public class Edge {
