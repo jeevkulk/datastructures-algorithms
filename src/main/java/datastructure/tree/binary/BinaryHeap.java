@@ -18,6 +18,10 @@ public abstract class BinaryHeap<T extends Comparable<T>> implements Tree<T> {
 
     protected int currentSize = 0;
 
+    public int size() {
+        return currentSize;
+    }
+
     @Override
     public void add(T element) {
         if (currentSize >= loadFactor * objectArr.length) {
@@ -48,7 +52,8 @@ public abstract class BinaryHeap<T extends Comparable<T>> implements Tree<T> {
         if (currentSize == 0)
             throw new IllegalStateException();
         T t = objectArr[0];
-        objectArr[0] = objectArr[currentSize];
+        objectArr[0] = objectArr[currentSize-1];
+        objectArr[currentSize-1] = null;
         currentSize--;
         heapifyDown(0);
         return t;

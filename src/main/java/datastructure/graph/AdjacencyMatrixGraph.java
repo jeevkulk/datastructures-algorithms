@@ -101,28 +101,35 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
     }
 
     public Vertex[] getAllVertices() {
-        int counter = 0;
+        AtomicInteger counter = new AtomicInteger();
         Graph<T>.Vertex<T>[] allVertices = new Vertex[this.numberOfVertices];
         Graph<T>.Edge[][] localEdgeArr = edgeArr;
         boolean[][] visitedEdge = new boolean[localEdgeArr.length][localEdgeArr.length];
+        boolean[] visitedVertices = new boolean[this.numberOfVertices];
         for (int i = 0; i < localEdgeArr.length; i++) {
             for (int j = 0; j < localEdgeArr[i].length; j++) {
                 if (localEdgeArr[i][j] != null && i != j && !visitedEdge[i][j]) {
-                    allVertices[counter++] = localEdgeArr[i][j].getVertexFrom();
-                    depthFirstTraversal(localEdgeArr, visitedEdge, allVertices, counter, i, j);
+                    depthFirstTraversal(localEdgeArr, visitedEdge, visitedVertices, allVertices, counter, i, j);
                 }
             }
         }
         return allVertices;
     }
 
-    private void depthFirstTraversal(Edge[][] localEdgeArr, boolean[][] visitedEdge, Vertex[] allVertices, int counter, int i, int j) {
+    private void depthFirstTraversal(Edge[][] localEdgeArr, boolean[][] visitedEdge, boolean[] visitedVertices, Vertex[] allVertices, AtomicInteger counter, int i, int j) {
+        if (!visitedVertices[i]) {
+            allVertices[counter.getAndIncrement()] = localEdgeArr[i][j].getVertexFrom();
+            visitedVertices[i] = true;
+        }
+        if (!visitedVertices[j]) {
+            allVertices[counter.getAndIncrement()] = localEdgeArr[i][j].getVertexTo();
+            visitedVertices[j] = true;
+        }
         visitedEdge[i][j] = true;
         i = j;
         for (j = 0; j < localEdgeArr[i].length; j++) {
             if (localEdgeArr[i][j] != null && i != j && !visitedEdge[i][j]) {
-                allVertices[counter++] = localEdgeArr[i][j].getVertexTo();
-                depthFirstTraversal(localEdgeArr, visitedEdge, allVertices, counter, i, j);
+                depthFirstTraversal(localEdgeArr, visitedEdge, visitedVertices, allVertices, counter, i, j);
             }
         }
     }

@@ -93,6 +93,29 @@ public class AdjacencyMatrixGraphTest {
     }
 
     @Test
+    public void testGetAllVertices() {
+        adjacencyMatrixGraph = new AdjacencyMatrixGraph<>(5, true);
+        Graph.Vertex vertex0 = adjacencyMatrixGraph.createVertex("Zero");
+        Graph.Vertex vertex1 = adjacencyMatrixGraph.createVertex("One");
+        Graph.Vertex vertex2 = adjacencyMatrixGraph.createVertex("Two");
+        Graph.Vertex vertex3 = adjacencyMatrixGraph.createVertex("Three");
+        Graph.Vertex vertex4 = adjacencyMatrixGraph.createVertex("Four");
+
+        adjacencyMatrixGraph.addEdge(vertex0, vertex1, 1);
+        adjacencyMatrixGraph.addEdge(vertex0, vertex2, 1);
+        adjacencyMatrixGraph.addEdge(vertex1, vertex3, 1);
+        adjacencyMatrixGraph.addEdge(vertex2, vertex3, 1);
+        adjacencyMatrixGraph.addEdge(vertex3, vertex4, 1);
+
+        Graph.Vertex[] vertexArr = adjacencyMatrixGraph.getAllVertices();
+        for (int i = 0; i < vertexArr.length; i++) {
+            if (vertexArr[i] != null)
+                logger.info(vertexArr[i].toString());
+        }
+        Assert.assertEquals(5, adjacencyMatrixGraph.getAllVertices().length);
+    }
+
+    @Test
     public void testGetMotherVertices() {
         int numberOfVertices = 5;
         Graph<String>.Vertex<String>[] motherVertices = new Graph.Vertex[numberOfVertices];
