@@ -1,4 +1,4 @@
-package algorithm.string;
+package puzzle.string;
 
 import java.util.Scanner;
 
