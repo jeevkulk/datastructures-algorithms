@@ -144,23 +144,22 @@ public class BinaryTree<T extends Comparable<T>> implements Tree<T> {
     }*/
 
     public int getMaxWidth() {
-        if(root == null)
+        if (root == null)
             return 1;
         int maxWidth = 0;
         int tempWidth = 0;
         int height = getHeight(root);
-        for(int i = 0; i < height; i++) {
+        for (int i = 0; i < height; i++) {
             tempWidth = getWidth(root, i);
-            if(tempWidth > maxWidth)
-                maxWidth = tempWidth;
+            maxWidth = tempWidth > maxWidth ? tempWidth : maxWidth;
         }
         return maxWidth;
     }
 
     private int getWidth(Node<T> node, int depth) {
-        if(node == null)
+        if (node == null)
             return 0;
-        else if(depth == 0)
+        else if (depth == 0)
             return 1;
         else
             return getWidth(node.left,depth - 1) + getWidth(node.right, depth - 1);
