@@ -1,4 +1,4 @@
-package algorithm.graph;
+package algorithm.greedy.graph;
 
 import datastructure.graph.AdjacencyLinkedListGraph;
 import datastructure.graph.AdjacencyMatrixGraph;
@@ -7,7 +7,6 @@ import datastructure.graph.IGraph;
 import datastructure.tree.binary.MinimumBinaryHeap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sun.security.provider.certpath.Vertex;
 
 import java.util.*;
 
