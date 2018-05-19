@@ -1,4 +1,4 @@
-package algorithm.graph;
+package algorithm.greedy.graph;
 
 import datastructure.graph.AdjacencyMatrixGraph;
 import datastructure.graph.Graph;
