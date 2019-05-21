@@ -2,17 +2,18 @@ package algorithm.sort;
 
 import java.util.Arrays;
 
-public class SelectionSort<T extends Comparable<T>> {
+public class HeapSort<T extends Comparable<T>> {
 
+    //TODO: Work-in-progress
     /**
-     * Selection sort:
+     * Heap sort:
      * -> Has time complexity O(N^2) and space complexity O(1)
      * -> It is stable sorting algorithm
      * -> Used when less number of swaps are preferred
      * @param arr
      * @return
      */
-    public T[] selectionSort(T[] arr) {
+    public T[] heapSort(T[] arr) {
         for (int i = 0; i < arr.length; i++) {
             int minPos = i;
             for (int j = i + 1; j < arr.length; j++) {
@@ -28,7 +29,7 @@ public class SelectionSort<T extends Comparable<T>> {
     }
 
     /**
-     * Selection sort applied for integers
+     * Heap sort applied for integers
      * @param numbers
      * @return
      */
@@ -54,8 +55,8 @@ public class SelectionSort<T extends Comparable<T>> {
     public static void main(String args[]) {
         int[] randomNumbers = {13, 3242, 23, 2351, 352, 3915, 123, 32, 1, 5, 0};
         int[] sortedNumbers;
-        SelectionSort selectionSort = new SelectionSort();
-        sortedNumbers = selectionSort.sort(randomNumbers);
+        HeapSort heapSort = new HeapSort();
+        sortedNumbers = heapSort.sort(randomNumbers);
         System.out.println(Arrays.toString(sortedNumbers));
     }
 }
