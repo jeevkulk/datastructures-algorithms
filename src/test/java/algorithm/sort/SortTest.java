@@ -24,16 +24,16 @@ public class SortTest {
     }
 
     @Test
-    public void testSelectionSort() {
+    public void testInsertionSort() {
         Integer[] arr = new Integer[]{10, 14, 91, 18, 72, 551, 82749, 23, 55, 26};
-        Integer[] sortedArr = sort.sort(arr, Sort.SortMethod.SELECTION_SORT);
+        Integer[] sortedArr = sort.sort(arr, Sort.SortMethod.INSERTION_SORT);
         Assert.assertArrayEquals(new Integer[]{10, 14, 18, 23, 26, 55, 72, 91, 551, 82749}, sortedArr);
     }
 
     @Test
-    public void testInsertionSort() {
+    public void testSelectionSort() {
         Integer[] arr = new Integer[]{10, 14, 91, 18, 72, 551, 82749, 23, 55, 26};
-        Integer[] sortedArr = sort.sort(arr, Sort.SortMethod.INSERTION_SORT);
+        Integer[] sortedArr = sort.sort(arr, Sort.SortMethod.SELECTION_SORT);
         Assert.assertArrayEquals(new Integer[]{10, 14, 18, 23, 26, 55, 72, 91, 551, 82749}, sortedArr);
     }
 
