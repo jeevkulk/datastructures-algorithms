@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 public class HeapSort<T extends Comparable<T>> {
 
-    //TODO: Work-in-progress
     /**
      * Heap sort:
      * -> Has time complexity O(N^2) and space complexity O(1)
@@ -13,50 +12,41 @@ public class HeapSort<T extends Comparable<T>> {
      * @param arr
      * @return
      */
-    public T[] heapSort(T[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            int minPos = i;
-            for (int j = i + 1; j < arr.length; j++) {
-                if (arr[minPos].compareTo(arr[j]) > 0) {
-                    minPos = j;
-                }
-            }
-            T temp = arr[i];
-            arr[i] = arr[minPos];
-            arr[minPos] = temp;
+    private void heapify(int[] arr, int size, int rootIndex) {
+        int minimumIndex = rootIndex;
+        int leftNodeIndex = 2 * rootIndex + 1;
+        int rightNodeIndex = 2 * rootIndex + 2;
+
+        if (leftNodeIndex < size && arr[leftNodeIndex] > arr[minimumIndex])
+            minimumIndex = leftNodeIndex;
+        if (rightNodeIndex < size && arr[rightNodeIndex] > arr[minimumIndex])
+            minimumIndex = rightNodeIndex;
+
+        if (minimumIndex != rootIndex) {
+            int temp = arr[minimumIndex];
+            arr[minimumIndex] = arr[rootIndex];
+            arr[rootIndex] = temp;
+            heapify(arr, size, minimumIndex);
         }
-        return arr;
     }
 
-    /**
-     * Heap sort applied for integers
-     * @param numbers
-     * @return
-     */
-    public int[] sort (int[] numbers) {
-        for (int i = 0; i < numbers.length; i++) {
-            int minPos = i;
-            for (int j = i + 1; j < numbers.length; j++) {
-                if (numbers[minPos] > numbers[j]) {
-                    minPos = j;
-                }
-            }
-            swap(numbers, i, minPos);
-        }
-        return numbers;
-    }
+    public void sort(int arr[]) {
+        int n = arr.length;
+        for (int i = n / 2 - 1; i >= 0; i--)
+            heapify(arr, n, i);
 
-    private void swap(int[] numbers, int i, int j) {
-        int temp = numbers[i];
-        numbers[i] = numbers[j];
-        numbers[j] = temp;
+        for (int i = n-1; i >= 0; i--) {
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+            heapify(arr, i, 0);
+        }
     }
 
     public static void main(String args[]) {
         int[] randomNumbers = {13, 3242, 23, 2351, 352, 3915, 123, 32, 1, 5, 0};
-        int[] sortedNumbers;
         HeapSort heapSort = new HeapSort();
-        sortedNumbers = heapSort.sort(randomNumbers);
-        System.out.println(Arrays.toString(sortedNumbers));
+        heapSort.sort(randomNumbers);
+        System.out.println(Arrays.toString(randomNumbers));
     }
 }

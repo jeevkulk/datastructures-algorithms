@@ -38,6 +38,13 @@ public class SortTest {
     }
 
     @Test
+    public void testHeapSort() {
+        Integer[] arr = new Integer[]{10, 14, 91, 18, 72, 551, 82749, 23, 55, 26};
+        Integer[] sortedArr = sort.sort(arr, Sort.SortMethod.HEAP_SORT);
+        Assert.assertArrayEquals(new Integer[]{10, 14, 18, 23, 26, 55, 72, 91, 551, 82749}, sortedArr);
+    }
+
+    @Test
     public void testMergeSort() {
         Integer[] arr = new Integer[]{10, 14, 91, 18, 72, 551, 82749, 23, 55, 26};
         Integer[] sortedArr = sort.sort(arr, Sort.SortMethod.MERGE_SORT);
