@@ -34,32 +34,33 @@ public class SubArrayGreaterThanPivotUsingQuickSort {
         int i = -1;
         int left = 0;
         int right = arr.length;
+        int pivot = arr[pivotIndex];
 
         for (int j = left; j < right; j++) {
-            if (arr[j] <= arr[pivotIndex]) {
+            if (arr[j] < pivot) {
                 i++;
                 int temp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = temp;
             }
         }
-        if (pivotIndex < i) {
-            int temp = arr[pivotIndex];
-            for (int k = pivotIndex; k < i; k++) {
+        if (pivotIndex < i + 1) {
+            int temp = pivot;
+            for (int k = pivotIndex; k < i + 1; k++) {
                 arr[k] = arr[k + 1];
             }
-            arr[i] = temp;
-        } else if (pivotIndex > i) {
-            int temp = arr[pivotIndex];
-            for (int k = pivotIndex; k > i; k--) {
+            arr[i + 1] = temp;
+        } else if (pivotIndex > i + 1) {
+            int temp = pivot;
+            for (int k = pivotIndex; k > i + 1; k--) {
                 arr[k] = arr[k - 1];
             }
-            arr[i] = temp;
+            arr[i + 1] = temp;
         }
 
-        int[] subArrayGreaterThanPivot = new int[arr.length - i];
+        int[] subArrayGreaterThanPivot = new int[arr.length - (i + 1)];
         int l = 0;
-        for (int m = i; m < arr.length; m++) {
+        for (int m = i + 1; m < arr.length; m++) {
             subArrayGreaterThanPivot[l++] = arr[m];
         }
         return subArrayGreaterThanPivot;
