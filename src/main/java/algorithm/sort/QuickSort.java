@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class QuickSort<T extends Comparable<T>> {
 
     /**
-     * Quick sort:
+     * Quick quiz.sort:
      * -> Has time complexity O(NLogN), space complexity O(n/2)
      * -> It is unstable
      * @param arr
@@ -46,7 +46,7 @@ public class QuickSort<T extends Comparable<T>> {
 
 
     /**
-     * Quick sort implementation for integer arrays
+     * Quick quiz.sort implementation for integer arrays
      * @param arr
      * @return
      */
