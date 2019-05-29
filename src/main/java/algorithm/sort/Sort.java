@@ -15,7 +15,7 @@ public class Sort<T extends Comparable<T>> implements ISort<T> {
                 arr = new SelectionSort<T>().selectionSort(arr);
                 break;
             case HEAP_SORT:
-                //TODO: Need to change to heap sort
+                //TODO: Need to change to heap quiz.sort
                 arr = new SelectionSort<T>().selectionSort(arr);
                 break;
             case MERGE_SORT:

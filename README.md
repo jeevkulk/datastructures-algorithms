@@ -15,19 +15,19 @@ Refer: src/main/java/algorithm/array/MaxSumOfSubArray
 # 2. Sorting Algorithms
  
 **2.1 BubbleSort**
-Refer: src/main/java/algorithm/sort/BubbleSort
+Refer: src/main/java/algorithm/quiz.sort/BubbleSort
  
 **2.2 InsertionSort**
-Refer: src/main/java/algorithm/sort/InsertionSort
+Refer: src/main/java/algorithm/quiz.sort/InsertionSort
  
 **2.3 SelectionSort**
-Refer: src/main/java/algorithm/sort/SelectionSort
+Refer: src/main/java/algorithm/quiz.sort/SelectionSort
  
 **2.4 QuickSort**
-Refer: src/main/java/algorithm/sort/QuickSort
+Refer: src/main/java/algorithm/quiz.sort/QuickSort
  
 **2.5 MergeSort**
-Refer: src/main/java/algorithm/sort/MergeSort
+Refer: src/main/java/algorithm/quiz.sort/MergeSort
 
 
 # 3. String Algorithms
