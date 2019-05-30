@@ -1,5 +1,6 @@
 package quiz.sort;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -64,6 +65,29 @@ public class SubArrayGreaterThanPivotUsingQuickSort {
             subArrayGreaterThanPivot[l++] = arr[m];
         }
         return subArrayGreaterThanPivot;
+    }
+
+    public static int[] getSubarrayGreaterThanPivotByPivotSwap(int[] arr, int pivot) {
+        if ((pivot >= arr.length) || (pivot < 0)) {
+            return null;
+        }
+        int smallerIndex = -1, temp;
+        temp = arr[arr.length - 1];
+        arr[arr.length - 1] = arr[pivot];
+        arr[pivot] = temp;
+        pivot = arr.length - 1;
+        for (int i = 0; i < (arr.length - 1); i++) {
+            if (arr[i] < arr[pivot]) {
+                smallerIndex++;
+                temp = arr[i];
+                arr[i] = arr[smallerIndex];
+                arr[smallerIndex] = temp;
+            }
+        }
+        temp = arr[arr.length - 1];
+        arr[arr.length - 1] = arr[smallerIndex + 1];
+        arr[smallerIndex + 1] = temp;
+        return Arrays.copyOfRange(arr, smallerIndex + 1, arr.length);
     }
 
     public static void main(String args[]) {
