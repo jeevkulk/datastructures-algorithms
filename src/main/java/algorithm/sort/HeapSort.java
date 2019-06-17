@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class HeapSort<T extends Comparable<T>> {
 
     /**
-     * Heap quiz.sort:
+     * Heap algorithm.assignment.sort:
      * -> Has time complexity O(N^2) and space complexity O(1)
      * -> It is stable sorting algorithm
      * -> Used when less number of swaps are preferred

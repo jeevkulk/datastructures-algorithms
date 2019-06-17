@@ -1,4 +1,4 @@
-package puzzle.search;
+package algorithm.puzzle.search;
 
 import datastructure.tree.Trie;
 import org.apache.logging.log4j.LogManager;

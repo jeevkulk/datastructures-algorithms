@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class BubbleSort<T extends Comparable<T>> {
 
     /**
-     * Bubble quiz.sort:
+     * Bubble algorithm.assignment.sort:
      * -> It has time complexity O(N^2), space complexity O(1)
      * -> Is stable sorting algorithm - which means that equal value elements retain their position w.r.t. each other
      * @param arr

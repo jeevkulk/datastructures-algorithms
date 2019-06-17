@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class InsertionSort<T extends Comparable<T>> {
 
     /**
-     * Insertion quiz.sort:
+     * Insertion algorithm.assignment.sort:
      * -> Has time complexity O(N^2), space complexity O(1).
      * -> It is stable sorting algorithm.
      * @param arr
