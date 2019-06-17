@@ -1,4 +1,4 @@
-package quiz.sort;
+package algorithm.puzzle.sort;
 
 import java.util.Scanner;
 

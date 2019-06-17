@@ -1,4 +1,4 @@
-package puzzle.search;
+package algorithm.puzzle.search;
 
 import org.junit.Before;
 import org.junit.Test;

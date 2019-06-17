@@ -1,4 +1,4 @@
-package puzzle.tree;
+package datastructure.puzzle.tree;
 
 public class MaxNumberOfMoviesCalculator {
 

@@ -1,4 +1,4 @@
-package puzzle.array;
+package datastructure.puzzle.array;
 
 import java.util.Scanner;
 

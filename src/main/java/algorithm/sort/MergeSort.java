@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class MergeSort<T extends Comparable<T>> {
 
     /**
-     * Merge quiz.sort: Has time complexity O(NLogN), space complexity O(1)
+     * Merge algorithm.assignment.sort: Has time complexity O(NLogN), space complexity O(1)
      * @param arr
      * @return
      */
@@ -58,7 +58,7 @@ public class MergeSort<T extends Comparable<T>> {
     }
 
     /**
-     * Merge quiz.sort implementation for integer arrays
+     * Merge algorithm.assignment.sort implementation for integer arrays
      * @param numbers
      * @return
      */

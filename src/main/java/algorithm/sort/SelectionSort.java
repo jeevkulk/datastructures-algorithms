@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class SelectionSort<T extends Comparable<T>> {
 
     /**
-     * Selection quiz.sort:
+     * Selection algorithm.assignment.sort:
      * -> Has time complexity O(N^2) and space complexity O(1)
      * -> It is stable sorting algorithm
      * -> Used when less number of swaps are preferred
@@ -28,7 +28,7 @@ public class SelectionSort<T extends Comparable<T>> {
     }
 
     /**
-     * Selection quiz.sort applied for integers
+     * Selection algorithm.assignment.sort applied for integers
      * @param numbers
      * @return
      */
