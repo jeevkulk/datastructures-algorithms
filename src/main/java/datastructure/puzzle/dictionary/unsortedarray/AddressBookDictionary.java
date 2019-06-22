@@ -1,4 +1,4 @@
-package datastructure.puzzle.dictionary;
+package datastructure.puzzle.dictionary.unsortedarray;
 
 import java.util.*;
 
