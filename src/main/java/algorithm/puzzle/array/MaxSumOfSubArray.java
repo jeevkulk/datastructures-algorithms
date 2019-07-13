@@ -1,12 +1,11 @@
 package algorithm.puzzle.array;
 
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class MaxSumOfSubArray {
 
-    Logger logger = LogManager.getLogger(MaxSumOfSubArray.class);
+    private Logger logger = LogManager.getLogger(MaxSumOfSubArray.class);
 
     public int findMaxSumOfSubArray(int[] inputArr, Algorithm algorithm) {
         int maxSum = Integer.MIN_VALUE;
@@ -22,6 +21,11 @@ public class MaxSumOfSubArray {
 
     }
 
+    /**
+     * Max sum of a sub-array - using Kadane's Algorithm
+     * @param inputArr
+     * @return
+     */
 	public int findMaxSumOfSubArrayKadanesAlgo(int[] inputArr) {
 		int maxSum = Integer.MIN_VALUE, maxSumLowerIndex = 0, maxSumUpperIndex = 0;
 		int currSubArraySum = 0, currSubArrayLowerIndex = 0;

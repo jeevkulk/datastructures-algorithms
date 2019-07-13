@@ -1,4 +1,4 @@
-package algorithm.common.string;
+package algorithm.puzzle.string;
 
 import org.junit.Assert;
 import org.junit.Before;
