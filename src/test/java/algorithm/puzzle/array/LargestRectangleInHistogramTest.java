@@ -1,4 +1,4 @@
-package algorithm.common.array;
+package algorithm.puzzle.array;
 
 import org.junit.Assert;
 import org.junit.Before;
