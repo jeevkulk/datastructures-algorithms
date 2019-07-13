@@ -1,4 +1,4 @@
-package algorithm.common.string;
+package algorithm.puzzle.string;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
