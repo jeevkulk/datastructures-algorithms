@@ -1,4 +1,4 @@
-package algorithm.common.string;
+package algorithm.puzzle.string;
 
 public class HasUniqueChars {
 
