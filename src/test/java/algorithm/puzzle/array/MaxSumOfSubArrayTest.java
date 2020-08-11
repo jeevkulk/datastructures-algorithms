@@ -19,21 +19,19 @@ public class MaxSumOfSubArrayTest {
     @Test
     public void testMaxSumOfSubArray() {
         int[] inputArr = new int[]{-1, 2, 3, -4, 9, 2, -1, 10};
-        int sum = maxSumOfSubArray.findMaxSumOfSubArray(inputArr, MaxSumOfSubArray.Algorithm.MY_ALGORITHM);
-        Assert.assertEquals(21, sum);
-        sum = maxSumOfSubArray.findMaxSumOfSubArray(inputArr, MaxSumOfSubArray.Algorithm.KADANES_ALGORITHM);
+        int sum = maxSumOfSubArray.findMaxSumOfSubArray(inputArr, MaxSumOfSubArray.Algorithm.KADANES_ALGORITHM);
         Assert.assertEquals(21, sum);
 
         inputArr = new int[]{0, 10, -50, 25, -10, 35, 20, -60};
-        sum = maxSumOfSubArray.findMaxSumOfSubArray(inputArr, MaxSumOfSubArray.Algorithm.MY_ALGORITHM);
-        Assert.assertEquals(70, sum);
         sum = maxSumOfSubArray.findMaxSumOfSubArray(inputArr, MaxSumOfSubArray.Algorithm.KADANES_ALGORITHM);
         Assert.assertEquals(70, sum);
 
         inputArr = new int[]{0, -110, -50, 25, -10, 10, 20, -60};
-        sum = maxSumOfSubArray.findMaxSumOfSubArray(inputArr, MaxSumOfSubArray.Algorithm.MY_ALGORITHM);
-        Assert.assertEquals(45, sum);
         sum = maxSumOfSubArray.findMaxSumOfSubArray(inputArr, MaxSumOfSubArray.Algorithm.KADANES_ALGORITHM);
         Assert.assertEquals(45, sum);
+
+        inputArr = new int[]{-12, -10, -5, -2, -1, -10, -20, -60};
+        sum = maxSumOfSubArray.findMaxSumOfSubArray(inputArr, MaxSumOfSubArray.Algorithm.KADANES_ALGORITHM);
+        Assert.assertEquals(-1, sum);
     }
 }
