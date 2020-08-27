@@ -6,6 +6,7 @@ public class MergeSort<T extends Comparable<T>> {
 
     /**
      * Merge algorithm.assignment.sort: Has time complexity O(NLogN), space complexity O(1)
+     *
      * @param arr
      * @return
      */
@@ -33,10 +34,10 @@ public class MergeSort<T extends Comparable<T>> {
         T[] tempArr1 = (T[]) new Integer[l1];
         T[] tempArr2 = (T[]) new Integer[l2];
 
-        for (int i=0; i<l1; i++) {
+        for (int i = 0; i < l1; i++) {
             tempArr1[i] = arr[start + i];
         }
-        for (int i=0; i<l2; i++) {
+        for (int i = 0; i < l2; i++) {
             tempArr2[i] = arr[mid + 1 + i];
         }
 
@@ -59,15 +60,25 @@ public class MergeSort<T extends Comparable<T>> {
 
     /**
      * Merge algorithm.assignment.sort implementation for integer arrays
+     *
      * @param numbers
      * @return
      */
-    public int[] sort (int[] numbers) {
+    public int[] sort(int[] numbers) {
         int len = numbers.length;
         numbers = mergeSort(numbers, 0, len - 1);
         return numbers;
     }
 
+    /**
+     * Mid can also be calculated as (start + end)/ 2 - but if that is done then there is a possibility of integer
+     * limit overflow and should be avoided.
+     *
+     * @param numbers
+     * @param start
+     * @param end
+     * @return
+     */
     private int[] mergeSort(int[] numbers, int start, int end) {
         if (start < end) {
             int mid = start + (end - start) / 2;
@@ -108,7 +119,6 @@ public class MergeSort<T extends Comparable<T>> {
         return numbers;
     }
 
-
     public static void main(String args[]) {
         int[] randomNumbers = {13, 3242, 23, 2351, 352, 3915, 123, 32, 1, 5, 0};
         int[] sortedNumbers;
@@ -116,5 +126,4 @@ public class MergeSort<T extends Comparable<T>> {
         sortedNumbers = mergeSort.sort(randomNumbers);
         System.out.println(Arrays.toString(sortedNumbers));
     }
-
 }

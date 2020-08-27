@@ -7,6 +7,8 @@ public class BubbleSort<T extends Comparable<T>> {
     /**
      * Bubble algorithm.assignment.sort:
      * -> It has time complexity O(N^2), space complexity O(1)
+     * -> Worst case number of comparisons will be N^2
+     * -> Worst case number of swaps will be N^2
      * -> Is stable sorting algorithm - which means that equal value elements retain their position w.r.t. each other
      * @param arr
      * @return
@@ -30,8 +32,8 @@ public class BubbleSort<T extends Comparable<T>> {
      * @return
      */
     public int[] sort (int[] numbers) {
-        for (int i = 0; i < numbers.length; i++) {
-            for (int j = 0; j < numbers.length - i - 1; j++) {
+        for (int i = numbers.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
                 if (numbers[j] > numbers[j + 1])
                     swap(numbers, j, j + 1);
             }
